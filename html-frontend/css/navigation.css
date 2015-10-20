@@ -1,0 +1,98 @@
+/* CSS Document */
+
+/* Sidebar Styles */
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 160px;
+}
+
+#sidebar-wrapper {
+	z-index: 1000;
+	position: fixed;
+	left: 160px;
+	width: 0;
+	height: 100%;
+	margin-left: -160px;
+	overflow-y: auto;
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+	background-color: #282828;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 160px;
+}
+
+#content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 0px;
+}
+
+#wrapper.toggled #content-wrapper {
+    position: absolute;
+    margin-right: -160px;
+}
+
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 160px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
+    display: block;
+    text-decoration: none;
+    color: #999999;
+}
+
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+/* Pseudo-Navigationbar Styles */
+.navbar-toggle {
+	border:1px none transparent;
+	float:left;
+	margin:8px;
+}
+
+.navbar-fixed-top {
+	background-color: #282828;
+}
+.navbar-fixed-top .navbar-toggle:focus {
+	background-color:transparent
+}
+
+.navbar-fixed-top .navbar-toggle .icon-bar {
+	background-color:#3CC;
+}
+.navbar-fixed-top .navbar-brand {
+	color:#FFF;
+	font-family: 'Open Sans', sans-serif;
+}
+
+@media (min-width:768px) {
+	.navbar-toggle {
+		display:inline
+	}
+}
