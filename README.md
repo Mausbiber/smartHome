@@ -1,10 +1,10 @@
 # smartHome
 
-requires:
-  python ≥ 3.3
-  mysql
+## requires:
+  - python ≥ 3.3
+  - mysql
   
-python packages:
+## python packages:
   - websockets
   - pymysql
   - pyusb
