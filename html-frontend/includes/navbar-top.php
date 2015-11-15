@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <h1 class="no_margin">Zeitschaltuhr</h1>
+            <h1 class="no_margin"><?php echo $site_name; ?></h1>
         </div>
         <div class="hidden-xs col-sm-6 text-right">    
             <?php
