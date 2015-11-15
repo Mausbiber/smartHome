@@ -7,11 +7,11 @@
 	$database = new Config();
 	$db = $database->getConnection();
 	
-	$timer = new Data($db);
+	$scheduler = new Data($db);
 	$tmp = $_GET['id'];
-	$timer->id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
+	$scheduler->id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 	
-	if($timer->delete()){
+	if($scheduler->delete()){
 		echo "<script type=\"text/javascript\">TimerDelete($tmp);</script>";
 	} else{
 		echo "<script>alert('Fail')</script>";	

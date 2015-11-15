@@ -1,6 +1,13 @@
-/* CSS Document */
 
-/* Sidebar Styles */
+
+/* 
+------------------------------------------------------------------------------------------------------------------------
+WRAPPER
+main, sidebar, content
+------------------------------------------------------------------------------------------------------------------------
+*/
+
+
 #wrapper {
     padding-left: 0;
     -webkit-transition: all 0.5s ease;
@@ -43,6 +50,15 @@
     margin-right: -160px;
 }
 
+
+/* 
+------------------------------------------------------------------------------------------------------------------------
+NAVIGATION
+sidebar
+------------------------------------------------------------------------------------------------------------------------
+*/
+
+
 .sidebar-nav {
     position: absolute;
     top: 0;
@@ -58,9 +74,12 @@
 }
 
 .sidebar-nav li a {
-    display: block;
-    text-decoration: none;
-    color: #999999;
+	display: block;
+	text-decoration: none;
+	color: #DBDBDB;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+	font-weight: 300;
 }
 
 .sidebar-nav li a:hover {
@@ -69,7 +88,14 @@
     background: rgba(255,255,255,0.2);
 }
 
-/* Pseudo-Navigationbar Styles */
+
+/* 
+------------------------------------------------------------------------------------------------------------------------
+NAVBAR
+------------------------------------------------------------------------------------------------------------------------
+*/
+
+
 .navbar-toggle {
 	border:1px none transparent;
 	float:left;
@@ -79,6 +105,7 @@
 .navbar-fixed-top {
 	background-color: #282828;
 }
+
 .navbar-fixed-top .navbar-toggle:focus {
 	background-color:transparent
 }
@@ -86,13 +113,37 @@
 .navbar-fixed-top .navbar-toggle .icon-bar {
 	background-color:#3CC;
 }
-.navbar-fixed-top .navbar-brand {
-	color:#FFF;
-	font-family: 'Open Sans', sans-serif;
+
+
+/* 
+------------------------------------------------------------------------------------------------------------------------
+TIME & DATE
+------------------------------------------------------------------------------------------------------------------------
+*/
+
+
+#anzeige_uhrzeit {
+	font-size: 20px;
+	font-weight: 500;
+	color: #FFF;
+	padding-right: 16px;
+	line-height: 50px;
+	vertical-align: middle;
+}
+
+#anzeige_datum {
+	font-size: 20px;
+	font-weight: 300;
+	color: #FFF;
+	padding-right: 24px;
+	line-height: 50px;
+	vertical-align: middle;
 }
 
 @media (min-width:768px) {
+    
 	.navbar-toggle {
 		display:inline
 	}
+    
 }

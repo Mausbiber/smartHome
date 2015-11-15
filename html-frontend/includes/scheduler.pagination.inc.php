@@ -7,7 +7,7 @@
 		echo "</a></li>";
 	}
 	 
-	$total_rows = $timer->countAll();
+	$total_rows = $scheduler->countAll();
 	$total_pages = ceil($total_rows / $records_per_page);
 	$range = 2;
 	$initial_num = $page - $range;

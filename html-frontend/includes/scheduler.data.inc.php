@@ -160,7 +160,8 @@ class Data{
 			schedulers.weekly_friday,
 			schedulers.weekly_saturday,
 			schedulers.weekly_sunday,
-			switches.title AS switch_title
+			switches.title AS switch_title,
+			switches.icon AS switch_icon
 			FROM schedulers, switches 
 			WHERE switches.id = schedulers.switches_id 
 			ORDER BY schedulers.title ASC LIMIT {$from_record_num}, {$records_per_page}";
@@ -261,7 +262,7 @@ class Data{
 	
 		foreach ($this->events as $nr => $inhalt)
 		{
-			$datum[$nr]  = strtolower( $inhalt['datum'] );
+			$datum[$nr]  = strtolower( $inhalt['sort'] );
 			$scheduler_title[$nr]   = strtolower( $inhalt['scheduler_title'] );
 		}
 		array_multisort($datum, SORT_ASC, $this->events);
@@ -289,9 +290,12 @@ class Data{
 	
 	function scheduled_events_enter(&$index, $datum, $title, $icon, $status) {
 		$index++;
-		$this->events[$index]['datum'] = $datum->format("d.m.Y - H:i");
+		$tage = array("Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag");
+		$this->events[$index]['sort'] = $datum->format("d.m.Y - H:i");
+		$this->events[$index]['datum'] = $datum->format("d.m.Y");
+		$this->events[$index]['wochentag'] = $tage[$datum->format("w")];
+		$this->events[$index]['uhrzeit'] = $datum->format("H:i");
 		$this->events[$index]['scheduler_title'] = $title;
-		$this->events[$index]['icon'] = $icon;
 		$this->events[$index]['status'] = $status;
 	}
 
