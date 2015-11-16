@@ -48,7 +48,10 @@
     <body>
 
 		<!--Pseudo-Navigationsleiste mit Menu-Button und Anzeige des aktuellen Menu's-->
-    	<?php include_once '../includes/navbar-top.php' ?>
+        <?php
+            $site_name = "Zeitschaltuhr";
+            include_once '../includes/navbar-top.php';
+        ?>
     
         <!--Wrapper für die komplette Site-->
         <div id="wrapper">
