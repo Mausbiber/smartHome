@@ -68,7 +68,13 @@
                             
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <h2>Schaltplan ändern</h2>
+                                        <?php
+                                            if ($id<0) {
+                                                echo "<h2>Schaltplan erstellen</h2>";
+                                            } else {
+                                                echo "<h2>Schaltplan ändern</h2>";
+                                            }
+                                        ?>
                                     </div>
                                 </div>
                                 <hr>

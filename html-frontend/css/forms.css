@@ -20,7 +20,7 @@ label.small {
 	font-size: 13px;
 }
 
-@media (min-width: 1680px) {
+@media (min-width: 1280px) {
     
 	label {
 		font-size: 22px;
