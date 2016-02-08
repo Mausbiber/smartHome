@@ -158,6 +158,7 @@ article {
 	padding-right: 12px;
 	padding-bottom: 12px;
 	padding-left: 8px;	
+    /*border: 1px dotted #EEE;*/
 }
 .widget-space {
 	/*border: 1px dotted #FFF;*/
@@ -278,6 +279,8 @@ padding, margin, text-align, ....
 */
 
 
+.row_submenu {
+}
 .no_padding {
 	padding: 0px;
 }
@@ -296,6 +299,9 @@ padding, margin, text-align, ....
 .text-switch-center-left {
 	text-align: center;	
 }
+.text-switch-center-right {
+	text-align: center;
+}
 .scrolling-div {
 	max-height: 100px;
 	overflow: hidden;
@@ -311,18 +317,28 @@ span.off {
 	text-transform: uppercase;
 	}
 @media (min-width: 768px) {
+    .row_submenu {
+        padding-top: 12px;
+    }
 	.text-switch-right-center {
 		text-align: center;	
 	}
 	.text-switch-center-left {
 		text-align: left;	
 	}
+    .text-switch-center-right {
+        text-align: right;
+    }
+
 	.scrolling-div {
 		max-height: 120px;
 		height: 120px;
 	}
 }
 @media (min-width: 1280px) {
+    .row_submenu {
+        padding-top: 24px;
+    }
 	.scrolling-div {
 		max-height: 150px;
 		height: 150px;
@@ -341,6 +357,28 @@ bootstrap button color, ....
 .btn {
 	font-weight:300;
 }
+
+.btn-fix-width {
+    width: 160px;
+    margin: 12px !important;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 6px;
+    padding-top: 6px;
+}
+.btn-submenu {
+    width: 120px;
+    margin: auto !important;
+    padding: 4px;
+    border-bottom: 3px solid #288;
+}
+.btn-submenu a {
+    font-family: 'Roboto', sans-serif;
+    color: white;
+    font-size: 18px;
+    font-weight: 300;
+}
+
 .btn-primary,
 .btn-primary:hover, 
 .btn-primary:link, 
@@ -379,6 +417,9 @@ bootstrap button color, ....
 		margin-top: 20px;
 		margin-bottom: 20px;
 	}
+    .btn-submenu {
+        width: 200px;
+    }
 }
 
 
@@ -425,4 +466,19 @@ bootstrap modal dialog
 	font-size: 26px;
 	font-weight:300;
 	margin:0px;
+}
+
+
+
+
+
+
+.swiper-slide, .extra_padding {
+    padding: 0px;
+}
+@media (min-width: 768px) {
+    .swiper-slide, .extra_padding {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }

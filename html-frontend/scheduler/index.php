@@ -10,7 +10,7 @@
 	 
 	$database = new Config();
 	$db = $database->getConnection();
-	$scheduler = new Data($db);
+	$scheduler = new DataScheduler($db);
 	$data_schedulers = $scheduler->readAll($page, $from_record_num, $records_per_page);
 	$num_schedulers = $data_schedulers->rowCount();
 	
@@ -29,7 +29,7 @@
     
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900' rel='stylesheet' type='text/css'>
     	<link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
-    	<link href="../css/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
+    	<link href="../css/addons/jquery.mCustomScrollbar.css" rel="stylesheet" type="text/css">
         <link href="../css/base.css" rel="stylesheet" type="text/css">
     
         <!--[if lt IE 9]>
@@ -57,7 +57,7 @@
                 <section class="container">
 
                     <div class="row">
-                        <div class="col-xs-12 col-lg-offset-1 col-lg-10 widget-space">
+                        <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-12 col-lg-offset-1 col-lg-10 widget-space">
                             <article class="first-widget">
 
                                 <!--Widget Header-->
@@ -158,17 +158,11 @@
     
         <script src="../js/jquery-2.1.4.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/jquery.mCustomScrollbar.js"></script>
+        <script src="../js/addons/jquery.mCustomScrollbar.js"></script>
         <script src="../js/navigation-scripts.js"></script>
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+        <script src="../js/addons/ie10-viewport-bug-workaround.js"></script>
 
 		<script>
-			var socketServer = new WebSocket('ws://192.168.127.30:5554');
-			socketServer.onerror = function(error) {};
-			socketServer.onopen = function(event) {};
-			socketServer.onmessage = function(event) {};
-			socketServer.onclose = function(event) {};
-				
 			$(window).load(function(){
 				$(".scrolling-div").mCustomScrollbar({
 					theme:"light",

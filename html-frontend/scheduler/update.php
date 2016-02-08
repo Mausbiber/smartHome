@@ -6,7 +6,7 @@
 	 
 	$database = new Config();
 	$db = $database->getConnection();
-	$scheduler = new Data($db);
+	$scheduler = new DataScheduler($db);
 	$switches = $scheduler->readSwitches();
 
 	if (isset($_GET['id'])) {
@@ -32,8 +32,8 @@
     
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900' rel='stylesheet' type='text/css'>
     	<link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
-    	<link href="../css/bootstrap-clockpicker.min.css" rel="stylesheet" type="text/css">
-    	<link href="../css/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css">
+    	<link href="../css/addons/bootstrap-clockpicker.min.css" rel="stylesheet" type="text/css">
+    	<link href="../css/addons/bootstrap-datepicker3.min.css" rel="stylesheet" type="text/css">
         <link href="../css/base.css" rel="stylesheet" type="text/css">
         <link href="../css/forms.css" rel="stylesheet" type="text/css">
     
@@ -42,7 +42,7 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-		<script src="../includes/timer_python_bridge.js"></script>
+		<script src="../js/timer_python_bridge.js"></script>
     </head>
     
     <body>
@@ -111,19 +111,19 @@
                                 <form method="post">
                                 	<!-- Main-Form -->
                                     <div class="row">
-                                        <div class="col-xs-12 col-md-5 col-lg-5">
+                                        <div class="col-xs-12 col-sm-5">
                                             <div class="row form-inline">
-                                                <div class="col-xs-4 col-md-4 col-lg-5 text-right">
+                                                <div class="col-xs-4 col-sm-6 col-md-4 col-lg-5 text-right">
                                                     <label for="title" class="control-label">Name</label>
                                                 </div>
                                                 <div class="col-xs-6 col-md-8 col-lg-7 no_padding text-left">
-                                                    <input type="text" class="form-control" name="title" id="title" value='<?php echo $scheduler->title; ?>' required>                                                
+                                                    <input type="text" class="form-control" name="title" id="title" placeholder="Wohnzimmerpflanzen" value='<?php echo $scheduler->title; ?>' required>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-md-6 col-lg-7">
+                                        <div class="col-xs-12 col-sm-6 col-lg-7">
                                             <div class="row form-inline">
-                                                <div class="col-xs-4 col-md-3 text-right">
+                                                <div class="col-xs-4 col-sm-3 text-right">
                                                     <label for="device" class="control-label">Schalter</label>
                                                 </div>
                                                 <div class="col-xs-6 no_padding text-left">
@@ -147,35 +147,35 @@
                                     </div>
     
                                     <div class="row">
-                                        <div class="col-xs-12 col-md-5 col-lg-5">
+                                        <div class="col-xs-12 col-sm-5">
                                             <div class="row form-inline">
-                                                <div class="col-xs-4 col-md-4 col-lg-5 text-right">
+                                                <div class="col-xs-4 col-sm-6 col-md-4 col-lg-5 text-right">
                                                     <label for="str_date_start" class="control-label">Datum</label>
                                                 </div>
                                                 <div class="col-xs-6 col-md-8 col-lg-7 text-left no_padding ">
                                                     <div class="input-group date datepicker no_padding ">
-                                                        <input type="text" id="str_date_start" class="form-control" name="str_date_start" value='<?php echo $scheduler->strDateStart; ?>' required readonly><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                                                        <input type="text" id="str_date_start" class="form-control" name="str_date_start" placeholder="01.07.2016" value='<?php echo $scheduler->strDateStart; ?>' required readonly><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-md-6 col-lg-7">
+                                        <div class="col-xs-12 col-sm-6 col-lg-7">
                                             <div class="row form-inline">
-                                                <div class="col-xs-4 col-md-3 col-lg-3 text-right">
+                                                <div class="col-xs-4 col-sm-3 text-right">
                                                     <label for="str_time_start" class="control-label">von</label>
                                                 </div>
-                                                <div class="col-xs-6 col-md-4 col-lg-3 no_padding text-left">
+                                                <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3 no_padding text-left">
                                                     <div class="input-group clockpicker">
-                                                        <input type="text" class="form-control" id="str_time_start" name="str_time_start" value='<?php echo $scheduler->strTimeStart; ?>' required readonly><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                        <input type="text" class="form-control" id="str_time_start" name="str_time_start" placeholder="08:00" value='<?php echo $scheduler->strTimeStart; ?>' required readonly><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix visible-xs-block"></div>
-                                                <div class="col-xs-4 col-md-1 col-lg-1 no_padding_extra text-switch-right-center">
+                                                <div class="col-xs-4 col-sm-1 no_padding_extra text-switch-right-center">
                                                     <label for="str_time_stop" class="control-label">bis</label>
                                                 </div>
-                                                <div class="col-xs-6 col-md-4 col-lg-3 no_padding text-left">
+                                                <div class="col-xs-6 col-sm-4 col-lg-3 no_padding text-left">
                                                     <div class="input-group clockpicker">
-                                                        <input type="text" class="form-control" id="str_time_stop" name="str_time_stop" value='<?php echo $scheduler->strTimeStop; ?>' required readonly><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                        <input type="text" class="form-control" id="str_time_stop" name="str_time_stop" placeholder="18:00" value='<?php echo $scheduler->strTimeStop; ?>' required readonly><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -183,9 +183,9 @@
                                     </div>
                                                        
                                     <div class="row">
-                                        <div class="col-xs-12 col-md-5 col-lg-5">
+                                        <div class="col-xs-12 col-sm-5">
                                             <div class="row form-inline">
-                                                <div class="col-xs-4 col-md-4 col-lg-5 text-right">
+                                                <div class="col-xs-4 col-sm-6 col-md-4 col-lg-5 text-right">
                                                     <label for="str_date_stop" class="control-label">Ende</label>
                                                 </div>
                                                 <div class="col-xs-6 col-md-8 col-lg-7 no_padding text-left">
@@ -195,12 +195,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-xs-12 col-md-6 col-lg-7">                                    
+                                        <div class="col-xs-12 col-sm-6 col-lg-7">
                                             <div class="row">
-                                                <div class="col-xs-4 col-md-3 text-right">
+                                                <div class="col-xs-4 col-sm-3 text-right">
                                                     <label class="control-label">Dauer</label>
                                                 </div>
-                                                <div class="col-xs-7 col-xs-offset-1 col-md-offset-0 no_padding text-left">
+                                                <div class="col-xs-7 col-xs-offset-1 col-sm-offset-0 no_padding text-left">
                                                     <div class="form-group">
                                                         <label class="radio-scheduler"><input name="duration" id="duration" value="einmalig" type="radio" class="radio-scheduler" <?php if ($scheduler->duration=='einmalig') echo "checked" ?>>einmalig Durchlauf</label>
                                                         <label class="radio-scheduler"><input name="duration" id="duration" value="intervall" type="radio" class="radio-scheduler" data-toggle="modal" data-target="#modalIntervall" <?php if ($scheduler->duration=='intervall') echo "checked" ?>>Wiederholung in Intervallen</label>
@@ -212,19 +212,11 @@
                                     </div>
                                     
                                     <div class="row">
-                                        <div class="col-xs-12 col-md-5 col-lg-5">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-8 col-md-offset-4 col-lg-offset-5 text-switch-center-left no_padding">
-                                                    <button type="submit" name="submit" class="btn btn-primary "><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  Änderungen speichern</button>
-                                                </div>
-                                            </div>
+                                        <div class="col-xs-12 col-sm-6 text-switch-center-right no_padding">
+                                            <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  Speichern</button>
                                         </div>
-                                        <div class="col-xs-12 col-md-6 col-lg-7">
-                                            <div class="row">
-                                                <div class="col-xs-12 col-md-7 col-md-offset-3 text-switch-center-left no_padding">
-                                                    <a class="btn btn-default" href="index.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  Abbrechen</a>
-                                                </div>
-                                            </div>
+                                        <div class="col-xs-12 col-sm-6 text-switch-center-left no_padding">
+                                            <a class="btn btn-default btn-fix-width" href="index.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  Abbrechen</a>
                                         </div>
                                     </div>
 
@@ -243,7 +235,7 @@
                                                         </div>
                                                         <div class="col-xs-3 col-sm-2">
                                                             <div class="input-group">
-                                                                <input type="number" id="interval_number" class="form-control" name="interval_number" value='<?php echo $scheduler->intervalNumber; ?>'>
+                                                                <input type="number" id="interval_number" class="form-control" name="interval_number" placeholder="15" value='<?php echo $scheduler->intervalNumber; ?>'>
                                                             </div>
                                                         </div>
                                                         <div class="col-xs-4 col-sm-3 no_padding">
@@ -325,12 +317,15 @@
         <script src="../js/jquery-2.1.4.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/navigation-scripts.js"></script>
-    	<script src="../js/bootstrap-clockpicker.min.js"></script>
-    	<script src="../js/bootstrap-datepicker.min.js"></script>
-        <script src="../js/validator.js"></script>
-        <script src="../js/ie10-viewport-bug-workaround.js"></script>
+    	<script src="../js/addons/bootstrap-clockpicker.min.js"></script>
+    	<script src="../js/addons/bootstrap-datepicker.min.js"></script>
+        <script src="../js/addons/ie10-viewport-bug-workaround.js"></script>
 		<script>
 	
+
+
+
+
 			$('.clockpicker').clockpicker({
 				donetext: 'Fertig',
 				'default': 'now'

@@ -8,6 +8,7 @@ from tinkerforge.bricklet_remote_switch import RemoteSwitch
 from tinkerforge.bricklet_moisture import Moisture
 from tinkerforge.bricklet_ptc import PTC
 from tinkerforge.bricklet_dual_relay import DualRelay
+from tinkerforge.bricklet_industrial_quad_relay import BrickletIndustrialQuadRelay
 
 
 # FERTIG
@@ -294,7 +295,6 @@ class BrickletPTC:
 
 # FERTIG
 class BrickletMoisture:
-
     def __init__(self, uid, connection, logging_daemon, queue, value=0.0, trigger_difference=7.0):
         self._bricklet = Moisture(uid, connection)
         self._value = value
@@ -348,71 +348,97 @@ class BrickletMoisture:
 
 # FERTIG
 class BrickletDualRelay:
-
-    def __init__(self, uid, connection, logging_daemon, queue):
+    def __init__(self, uid, switch_id, ip, connection, logging_daemon, queue):
         self._bricklet = DualRelay(uid, connection)
         self.uid = uid
+        self.switch_id = switch_id
+        self.ip = ip
         self._logging_daemon = logging_daemon
         self._queue = queue
         self._logging_daemon.info('Tinkerforge ... DualRelay-Bricklet "%s" initialisiert' % uid)
 
-    def _get_relay_a(self):
+    def status(self, number):
         _tmp = self._bricklet.get_state()
-        return _tmp[0]
+        return _tmp[number]
 
-    def _set_relay_a(self, _tmp):
-        self._bricklet.set_selected_state(1, _tmp)
+    def set_switch(self, switch_to, arg_a, arg_b, arg_c, arg_d):
+        self._bricklet.set_selected_state((arg_b + 1), switch_to)
+
         self._logging_daemon.debug(
-            'Tinkerforge ... DualRelay-Bricklet UID "%s" , Relais A , Neu = %s' % (self.uid, _tmp))
-        tmp_json = json.dumps(["send_changed_data", self.uid, "relay", "a", _tmp])
+            'Tinkerforge ... DualRelay-Bricklet UID "%s" , geschaltet Relais %s , SOLL = %s , IST = %s' % (
+                self.uid, arg_b, switch_to, self.status(arg_b)))
+        tmp_json = json.dumps(["switch_changed_status", self.ip, self.switch_id, switch_to])
         for consumer in self._queue:
             consumer(tmp_json)
             self._logging_daemon.info(
-                'Tinkerforge ... DualRelay-Bricklet UID "%s" Relais A , neuer Wert %s -> SocketServer Warteschlange ' % (
-                    self.uid, self._get_relay_a))
+                'Tinkerforge ... DualRelay-Bricklet UID "%s" Relais %s , send %s -> SocketServer Warteschlange ' % (
+                    self.uid, arg_b, self.status(arg_b)))
 
-    def _get_relay_b(self):
-        _tmp = self._bricklet.get_state()
-        return _tmp[1]
 
-    def _set_relay_b(self, _tmp):
-        self._bricklet.set_selected_state(2, _tmp)
-        self._logging_daemon.info(
-            'Tinkerforge ... DualRelay-Bricklet UID "%s" , Relais B , Neu = %s' % (self.uid, _tmp))
-        tmp_json = json.dumps(["send_changed_data", self.uid, "relay", "b", _tmp])
+# FERTIG
+class BrickletQuadRelay:
+    def __init__(self, uid, switch_id, ip, connection, logging_daemon, queue):
+        self._bricklet = BrickletIndustrialQuadRelay(uid, connection)
+        self.uid = uid
+        self.switch_id = switch_id
+        self.ip = ip
+        self._logging_daemon = logging_daemon
+        self._queue = queue
+        self._logging_daemon.info('Tinkerforge ... DualRelay-Bricklet "%s" initialisiert' % uid)
+
+    def status(self, number):
+        return ((self._bricklet.get_value() & (1 << int(number))) != 0)
+
+    def set_switch(self, switch_to, arg_a, arg_b, arg_c, arg_d):
+        _now = self._bricklet.get_value()
+        _change = 1 << int(arg_b)
+        self._bricklet.set_value(_now ^ _change)
+        self._logging_daemon.debug(
+            'Tinkerforge ... QuadRelay-Bricklet UID "%s" , geschaltet Relais %s , SOLL = %s , IST = %s' % (
+                self.uid, arg_b, switch_to, self.status(arg_b)))
+        tmp_json = json.dumps(["switch_changed_status", self.ip, self.switch_id, switch_to])
         for consumer in self._queue:
             consumer(tmp_json)
             self._logging_daemon.info(
-                'Tinkerforge ... DualRelay-Bricklet UID "%s" Relais B , neuer Wert %s -> SocketServer Warteschlange ' % (
-                    self.uid, self._get_relay_b))
-
-    a = property(_get_relay_a, _set_relay_a)
-    b = property(_get_relay_b, _set_relay_b)
+                'Tinkerforge ... QuadRelay-Bricklet UID "%s" Relais %s , send %s -> SocketServer Warteschlange ' % (
+                    self.uid, arg_b, self.status(arg_b)))
 
 
-# 50/50 FERTIG
+# 80 % FERTIG
 class BrickletRemote:
-
-    def __init__(self, uid, connection, logging_daemon, queue):
+    def __init__(self, uid, switch_id, ip, connection, logging_daemon, queue):
         self.bricklet = RemoteSwitch(uid, connection)
         self.uid = uid
+        self.switch_id = switch_id
+        self.ip = ip
         self._logging_daemon = logging_daemon
         self._queue = queue
         self._logging_daemon.debug('Tinkerforge ... Remote-Bricklet "%s" initialisiert' % uid)
 
-    def send(self, _type, _code_a, _code_b, _state):
+    @staticmethod
+    def status(number):
+        return -99
+
+    def set_switch(self, switch_to, arg_a, arg_b, arg_c, arg_d):
 
         self.bricklet.set_repeats(5)
-        if _type == "a":
+        switched = False
+        if arg_b == "b switch":
+            self.bricklet.switch_socket_b(int(arg_c), int(arg_d), switch_to)
+            switched = True
             pass
-        elif _type == "b":
+        elif arg_b == "c switch":
+            self.bricklet.switch_socket_c(int(arg_c), int(arg_d), switch_to)
+            switched = True
             pass
-        elif _type == "c":
-            self.bricklet.switch_socket_c(_code_a, _code_b, _state)
 
-        tmp_json = json.dumps(["send_changed_data", self.uid, "remote", _type, _state])
-        for consumer in self._queue:
-            consumer(tmp_json)
-            self._logging_daemon.info(
-                'Tinkerforge ... Remote-Bricklet UID "%s" send -> SocketServer Warteschlange ' % self.uid)
-
+        if switched:
+            self._logging_daemon.debug(
+                'Tinkerforge ... RemoteSwitch-Bricklet UID "%s" , geschaltet %s %s %s, SOLL = %s , ' %
+                (self.uid, arg_b, arg_c, arg_d, switch_to))
+            tmp_json = json.dumps(["switch_changed_status", self.ip, self.switch_id, switch_to])
+            for consumer in self._queue:
+                consumer(tmp_json)
+                self._logging_daemon.info(
+                    'Tinkerforge ... RemoteSwitch-Bricklet UID "%s" Relais %s %s %s, send %s -> SocketServer'
+                    ' Warteschlange ' % (self.uid, arg_b, arg_c, arg_d, switch_to))

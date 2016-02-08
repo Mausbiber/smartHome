@@ -1,4 +1,4 @@
-<script src="../includes/timer_python_bridge.js"></script>
+<script src="../js/timer_python_bridge.js"></script>
 
 <?php
 	include_once '../includes/config.php';
@@ -7,7 +7,7 @@
 	$database = new Config();
 	$db = $database->getConnection();
 	
-	$scheduler = new Data($db);
+	$scheduler = new DataScheduler($db);
 	$tmp = $_GET['id'];
 	$scheduler->id = isset($_GET['id']) ? $_GET['id'] : die('ERROR: missing ID.');
 	

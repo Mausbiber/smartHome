@@ -1,3 +1,7 @@
+<?php
+    $events = $scheduler->scheduled_events_list("+14 days");
+    if (count($events)>0) {
+?>
 <div class="row">
     <div class="col-xs-12 col-lg-offset-1 col-lg-10 widget-space ">
        	<article class="title-widget no_padding_bottom">
@@ -12,7 +16,6 @@
 </div>    
 <div class="row">
     <?php
-        $events = $scheduler->scheduled_events_list("+14 days");
 		$first_pass = true;
 		$zaehler = 0;
 		$even_box = true;
@@ -61,3 +64,6 @@
     ?>
 </div>
 
+<?php
+    }
+?>

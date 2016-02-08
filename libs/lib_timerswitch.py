@@ -49,13 +49,16 @@ class TimerSwitch:
               "schedulers.weekly_sunday, " \
               "switches.id AS switches_id, " \
               "switches.title AS switches_title, " \
-              "switches.typ AS switches_typ, " \
               "switches.argA, " \
               "switches.argB, " \
               "switches.argC, " \
-              "switches.argD " \
-              "FROM schedulers, switches " \
-              "WHERE schedulers.switches_id = switches.id"
+              "switches.argD, " \
+              "switch_types.title AS switches_typ, " \
+              "clients.ip AS switches_ip " \
+              "FROM schedulers, switches, switch_types, clients " \
+              "WHERE schedulers.switches_id = switches.id " \
+              "AND switches.switch_types_id = switch_types.id " \
+              "AND switches.clients_id = clients.id"
         if isinstance(scheduler_id, int):
             sql += " AND schedulers.id = %s"
             self._db_connection.execute(sql, scheduler_id)
@@ -99,13 +102,11 @@ class TimerSwitch:
                 start_date=date_start_off, end_date=date_stop_off)
 
         self._scheduler.add_job(self._method, scheduler_type,
-                                args=[title, scheduler_id, True, None, dataset['switches_typ'], dataset['argA'],
-                                      dataset['argB'], dataset['argC'], dataset['argD']], id='%son' % scheduler_id,
-                                **args_on)
+                                args=[scheduler_id, dataset['switches_id'], dataset['switches_ip'], True, None],
+                                id='%son' % scheduler_id, **args_on)
         self._scheduler.add_job(self._method, scheduler_type,
-                                args=[title, scheduler_id, False, date_stop_off, dataset['switches_typ'],
-                                      dataset['argA'], dataset['argB'], dataset['argC'], dataset['argD']],
-                                id='%soff' % scheduler_id, **args_off)
+                                args=[scheduler_id, dataset['switches_id'], dataset['switches_ip'], False,
+                                      date_stop_off], id='%soff' % scheduler_id, **args_off)
 
         self._logging_daemon.info('Timerswitch ... add_job "%s" (id = %s)' % (title, scheduler_id))
         self._logging_daemon.debug(

@@ -68,13 +68,7 @@ sidebar
     list-style: none;
 }
 
-.sidebar-nav li {
-    text-indent: 20px;
-    line-height: 40px;
-}
-
-.sidebar-nav li a {
-	display: block;
+#sidebar-wrapper a {
 	text-decoration: none;
 	color: #DBDBDB;
 	font-family: 'Roboto', sans-serif;
@@ -82,12 +76,25 @@ sidebar
 	font-weight: 300;
 }
 
-.sidebar-nav li a:hover {
+#sidebar-wrapper a:hover {
     text-decoration: none;
     color: #fff;
     background: rgba(255,255,255,0.2);
 }
 
+#sidebar-wrapper .list-group-item {
+    background-color: transparent;
+    border: 0px none;
+}
+
+#sidebar-wrapper .list-group-item-sub{
+    text-indent: 12px;
+    font-size: 14px;
+}
+
+#sidebar-wrapper .list-group-item:first-child, #sidebar-wrapper .list-group-item:last-child {
+    border-radius: 0px;
+}
 
 /* 
 ------------------------------------------------------------------------------------------------------------------------

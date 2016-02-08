@@ -1,6 +1,6 @@
 // JavaScript Document
 
-var socketServer = new WebSocket('ws://192.168.127.30:5554');
+var socketServer = new WebSocket('ws://192.168.127.20:5505');
 var offline = false;
 
 socketServer.onerror = function(error) {
@@ -15,17 +15,17 @@ socketServer.onmessage = function(event) {};
 socketServer.onclose = function(event) {};
 
 function TimerNew (timer) {
-	var send_string = JSON.stringify(["new",timer])
+	var send_string = JSON.stringify(["timerswitch_new",,,timer])
 	this.send(send_string);
 	window.setTimeout(function(){window.location = "index.php"},500);
 };
 function TimerUpdate (timer) {
-	var send_string = JSON.stringify(["update",timer])
+	var send_string = JSON.stringify(["timerswitch_update",,,timer])
 	this.send(send_string);
 	window.setTimeout(function(){window.location = "index.php"},500);
 };
 function TimerDelete (timer) {
-	var send_string = JSON.stringify(["delete",timer])
+	var send_string = JSON.stringify(["timerswitch_delete",,,timer])
 	this.send(send_string);
 	window.setTimeout(function(){window.location = "index.php"},500);
 };

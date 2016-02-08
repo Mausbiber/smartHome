@@ -1,5 +1,5 @@
 <?php
-class Data{
+class DataScheduler{
 
 	private $conn;
 
@@ -161,9 +161,9 @@ class Data{
 			schedulers.weekly_saturday,
 			schedulers.weekly_sunday,
 			switches.title AS switch_title,
-			switches.icon AS switch_icon
-			FROM schedulers, switches 
-			WHERE switches.id = schedulers.switches_id 
+			switch_types.icon AS switch_icon
+			FROM schedulers, switches, switch_types
+			WHERE switches.id = schedulers.switches_id AND switches.switch_types_id = switch_types.id
 			ORDER BY schedulers.title ASC LIMIT {$from_record_num}, {$records_per_page}";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
@@ -190,9 +190,9 @@ class Data{
 			schedulers.weekly_friday,
 			schedulers.weekly_saturday,
 			schedulers.weekly_sunday,
-			switches.icon AS icon
-			FROM schedulers, switches 
-			WHERE switches.id = schedulers.switches_id";
+			switch_types.icon AS switch_icon
+			FROM schedulers, switches, switch_types
+			WHERE switches.id = schedulers.switches_id AND switches.switch_types_id = switch_types.id";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 	
@@ -507,4 +507,4 @@ class Data{
  	}
 	
 }
-?> 
+?>

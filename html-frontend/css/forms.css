@@ -17,18 +17,27 @@ label {
 }
 
 label.small {
-	font-size: 13px;
+	font-size: 12px;
+    color: white;
+}
+
+fieldset label {
+    text-indent: 16px;
 }
 
 @media (min-width: 1280px) {
     
-	label {
+    fieldset label {
+        text-indent: 32px;
+    }
+
+    label {
 		font-size: 22px;
 		line-height: 36px;
 	}
     
 	label.small {
-		font-size: 19px;
+		font-size: 16px;
 	}
     
 }
@@ -123,6 +132,33 @@ form .row {
 
 /* 
 ------------------------------------------------------------------------------------------------------------------------
+INPUT
+input box
+------------------------------------------------------------------------------------------------------------------------
+*/
+
+
+input.fix-width-number {
+    width: 50px;
+}
+
+
+input[type=text].argument {
+    margin-bottom: 12px !important;
+}
+
+@media (min-width: 768px) {
+
+    input.fix-width-number {
+        width: 70px;
+    }
+
+}
+
+
+
+/*
+------------------------------------------------------------------------------------------------------------------------
 ADDONS
 clockpicker & datepicker
 ------------------------------------------------------------------------------------------------------------------------
@@ -170,3 +206,33 @@ bootstrap modal dialog
     
 }
 
+
+
+
+
+
+
+fieldset {
+    padding: 0px;
+    margin: 0px;
+    margin-top: 24px;
+}
+
+fieldset.border {
+    border: 2px groove #288 !important;
+    padding: 0 0 20px 20px !important;
+    margin: 20px !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+fieldset legend {
+    color: #288;
+    font-size: 18px !important;
+    font-weight: 300 !important;
+    text-align: left !important;
+    width:inherit;
+    padding: 0px;
+    margin: 0px;
+    border-bottom:none;
+}
