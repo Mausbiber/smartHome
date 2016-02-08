@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `smartHome` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `smartHome`;
 -- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: smartHome
@@ -32,7 +30,7 @@ CREATE TABLE `clients` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id_UNIQUE` (`id`),
   UNIQUE KEY `ip_UNIQUE` (`ip`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,7 +73,7 @@ CREATE TABLE `schedulers` (
   UNIQUE KEY `title_UNIQUE` (`title`),
   KEY `fk_schedulers_switches_idx` (`switches_id`),
   CONSTRAINT `fk_schedulers_switches` FOREIGN KEY (`switches_id`) REFERENCES `switches` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -116,6 +114,31 @@ LOCK TABLES `sensor_data` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sensor_types`
+--
+
+DROP TABLE IF EXISTS `sensor_types`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `sensor_types` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(25) DEFAULT NULL,
+  `description` varchar(60) DEFAULT NULL,
+  `icon` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sensor_types`
+--
+
+LOCK TABLES `sensor_types` WRITE;
+/*!40000 ALTER TABLE `sensor_types` DISABLE KEYS */;
+/*!40000 ALTER TABLE `sensor_types` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sensors`
 --
 
@@ -127,9 +150,13 @@ CREATE TABLE `sensors` (
   `title` varchar(45) DEFAULT NULL,
   `description` varchar(45) DEFAULT NULL,
   `clients_id` int(11) NOT NULL,
+  `sensor_types_id` int(11) NOT NULL,
   `argA` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`,`clients_id`),
+  `argB` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`,`clients_id`,`sensor_types_id`),
   KEY `fk_sensors_clients1_idx` (`clients_id`),
+  KEY `fk_sensors_sensor_types1_idx` (`sensor_types_id`),
+  CONSTRAINT `fk_sensors_sensor_types1` FOREIGN KEY (`sensor_types_id`) REFERENCES `sensor_types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_sensors_clients1` FOREIGN KEY (`clients_id`) REFERENCES `clients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -216,7 +243,7 @@ CREATE TABLE `switches` (
   KEY `fk_switches_switch_types1_idx` (`switch_types_id`),
   CONSTRAINT `fk_switches_clients1` FOREIGN KEY (`clients_id`) REFERENCES `clients` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_switches_switch_types1` FOREIGN KEY (`switch_types_id`) REFERENCES `switch_types` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -237,4 +264,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-08 20:13:47
+-- Dump completed on 2016-02-08 22:08:57
