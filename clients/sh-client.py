@@ -9,7 +9,7 @@ import json
 from tinkerforge.ip_connection import IPConnection
 from lib_tinkerforge import BrickletQuadRelay, BrickletRemote, BrickletDualRelay
 import lib_sispm
-import lib_gpio
+#import lib_gpio
 
 import pymysql
 import websockets
@@ -56,8 +56,12 @@ def sending_loop(websocket):
 @asyncio.coroutine
 def client_handler():
     # connect to server
-    websocket = yield from websockets.connect('ws://' + SERVER_IP + ':' + SERVER_CLIENTS_PORT + '/')
-
+    while True:
+        try:
+            websocket = yield from websockets.connect('ws://' + SERVER_IP + ':' + SERVER_CLIENTS_PORT + '/')
+            break
+        except OSError:
+            pass
     # set up sending-queue
     task = asyncio.async(sending_loop(websocket))
     logger.debug('websockets .... asyncio.async')

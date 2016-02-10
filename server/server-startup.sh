@@ -1,16 +1,16 @@
 #!/bin/sh
 # chkconfig: 123456 90 10
 #
-workdir=/sourcecode
+workdir=/smartHome/server
 
 start() {
     cd ${workdir}
-    /usr/bin/python3.4 /sourcecode/sh-server.py &
+    /usr/local/bin/python3.4 /smartHome/server/sh-server.py &
     echo "Server started."
 }
 
 stop() {
-    pid=`ps -ef | grep '[p]ython3.4 /sourcecode/sh-server.py' | awk '{ print $2 }'`
+    pid=`ps -ef | grep '[p]ython3.4 /smartHome/server/sh-server.py' | awk '{ print $2 }'`
     echo ${pid}
     kill ${pid}
     sleep 2
