@@ -139,7 +139,7 @@
                     <!-- 2. Widget: Allgemeine Einstellungen -->
                     <div class="row">
                         <div class="col-xs-12 col-sm-offset-1 col-sm-10 col-md-offset-0 col-md-12 col-lg-offset-1 col-lg-10 widget-space">
-                            <article class="first-widget">
+                            <article class="second-widget">
 
                                 <!--Widget Header-->
                                 <div class="row">
@@ -172,26 +172,26 @@
                                                     <fieldset>
                                                         <legend class="fieldset">Zeitschaltuhr</legend>
                                                         <div class="row">
-                                                            <div class="col-md-8 text-left">
+                                                            <div class="col-xs-8 text-left">
                                                                 <label for="scheduler_settings_page_per_view" class="control-label small">Einträge pro Seite</label>
                                                             </div>
-                                                            <div class="col-md-2 no_padding text-left">
+                                                            <div class="col-xs-2 no_padding text-left">
                                                                 <input type="number" class="form-control fix-width-number" name="scheduler_settings_page_per_view" id="scheduler_settings_page_per_view" value='<?php echo $data_settings['scheduler_settings_page_per_view']; ?>' required>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-md-8 text-left">
+                                                            <div class="col-xs-8 text-left">
                                                                 <label for="scheduler_preview_period" class="control-label small">Vorschau: Zeitraum</label>
                                                             </div>
-                                                            <div class="col-md-2 no_padding text-left">
+                                                            <div class="col-xs-2 no_padding text-left">
                                                                 <input type="number" class="form-control fix-width-number" name="scheduler_preview_period" id="scheduler_preview_period" value='<?php echo $data_settings['scheduler_preview_period']; ?>' required>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-md-8 text-left">
+                                                            <div class="col-xs-8 text-left">
                                                                 <label for="scheduler_preview_items" class="control-label small">Vorschau: Anzahl</label>
                                                             </div>
-                                                            <div class="col-md-2 no_padding text-left">
+                                                            <div class="col-xs-2 no_padding text-left">
                                                                 <input type="number" class="form-control fix-width-number" name="scheduler_preview_items" id="scheduler_preview_items" value='<?php echo $data_settings['scheduler_preview_items']; ?>' required>
                                                             </div>
                                                         </div>

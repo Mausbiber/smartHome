@@ -140,8 +140,9 @@
                                                                 <thead>
                                                                     <tr>
                                                                         <th>Bezeichnung</th>
-                                                                        <th>Client</th>
-                                                                        <th>Schalter-Art</th>
+                                                                        <th class="hidden-xs">Client</th>
+                                                                        <th class="hidden-sm hidden-md hidden-lg"></th>
+                                                                        <th class="hidden-xs">Schalter-Art</th>
                                                                         <th class="hidden-xs">Beschreibung</th>
                                                                         <th></th>
                                                                     </tr>
@@ -153,8 +154,9 @@
                                                                             extract($row_switches);
                                                                             echo "<tr>";
                                                                             echo "<td>".$switches_title."</td>";
-                                                                            echo "<td>".$clients_title."</td>";
-                                                                            echo "<td>".$switch_types_title."</td>";
+                                                                            echo "<td class='hidden-xs'>".$clients_title."</td>";
+                                                                            echo "<td class='hidden-sm hidden-md hidden-lg'>(".$switch_types_title.")<br>".$clients_title."</td>";
+                                                                            echo "<td class='hidden-xs'>".$switch_types_title."</td>";
                                                                             echo "<td class='hidden-xs'>".$switches_description."</td>";
                                                                             echo "<td width='100px'><a class='btn btn-warning btn-sm' href='switch_update.php?id={$switches_id}' role='button'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a> <a class='btn btn-danger btn-sm' href='switch_delete.php?id={$switches_id}' role='button'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a></td>";
                                                                             echo "</tr>";
@@ -230,7 +232,7 @@
                                                                             echo "<tr>";
                                                                             echo "<td>".$switch_types_title."</td>";
                                                                             echo "<td><img src='../img/icons/".$switch_types_icon."'></td>";
-                                                                            echo "<td>".$switch_types_description."</td>";
+                                                                            echo "<td class='hidden-xs'>".$switch_types_description."</td>";
                                                                             echo "<td width='100px'><a class='btn btn-warning btn-sm' href='switch_type_update.php?id={$switch_types_id}' role='button'><span class='glyphicon glyphicon-edit' aria-hidden='true'></span></a> <a class='btn btn-danger btn-sm' href='switch_type_delete.php?id={$switch_types_id}' role='button'><span class='glyphicon glyphicon-trash' aria-hidden='true'></span></a></td>";
                                                                             echo "</tr>";
                                                                         }
