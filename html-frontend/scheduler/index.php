@@ -2,8 +2,8 @@
 	date_default_timezone_set('Europe/Berlin');
 	
 	include_once '../includes/config.php';
+    include_once '../languages/lang.php';
 	include_once '../includes/scheduler.data.inc.php';
-
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;
 	$records_per_page = 5;
 	$from_record_num = ($records_per_page * $page) - $records_per_page;
@@ -43,7 +43,7 @@
     
 		<!--Pseudo-Navigationsleiste mit Menu-Button und Anzeige des aktuellen Menu's-->
         <?php
-            $site_name = "Zeitschaltuhr";
+            $site_name = $lang['time_switch'];
             include_once '../includes/navbar-top.php';
         ?>
         
@@ -63,7 +63,7 @@
                                 <!--Widget Header-->
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <h2>Schaltzeiten</h2>
+                                        <h2><?php echo $lang['cycle_times']; ?></h2>
                                     </div>
                                 </div>
                                 <hr>
@@ -71,7 +71,7 @@
                                 <!--Button: Add Data-->
                                 <div class="row">
                                     <div class="col-xs-12 text-switch-center-left">
-                                        <a class="btn btn-primary btn-big-margin" href="update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>  Neuer Schaltplan</a>
+                                        <a class="btn btn-primary btn-big-margin" href="update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>  <?php echo $lang['new_cycle_time']; ?></a>
                                     </div>
                                 </div>
                                 
@@ -81,14 +81,14 @@
                                         <table class="table text-left scheduler">
                                             <thead>
                                                 <tr>
-                                                    <th>Bezeichnung</th>
-                                                    <th class="hidden-xs">Schalter</th>
-                                                    <th class="hidden-xs">Datum</th>
-                                                    <th class="hidden-sm hidden-md hidden-lg">Zeitraum</th>
-                                                    <th class="hidden-xs">Start</th>
-                                                    <th class="hidden-xs">Stop</th>
-                                                    <th class="hidden-xs">Dauer</th>
-                                                    <th class="hidden-xs hidden-sm">Ende</th>
+                                                    <th><?php echo $lang['title']; ?></th>
+                                                    <th class="hidden-xs"><?php echo $lang['switch']; ?></th>
+                                                    <th class="hidden-xs"><?php echo $lang['date']; ?></th>
+                                                    <th class="hidden-sm hidden-md hidden-lg"><?php echo $lang['period']; ?></th>
+                                                    <th class="hidden-xs"><?php echo $lang['start']; ?></th>
+                                                    <th class="hidden-xs"><?php echo $lang['stop']; ?></th>
+                                                    <th class="hidden-xs"><?php echo $lang['duration']; ?></th>
+                                                    <th class="hidden-xs hidden-sm"><?php echo $lang['finish']; ?></th>
                                                     <th></th>
                                                 </tr>
                                             </thead>
@@ -163,7 +163,7 @@
         <script src="../js/addons/ie10-viewport-bug-workaround.js"></script>
 
 		<script>
-			$(window).load(function(){
+            $(window).load(function(){
 				$(".scrolling-div").mCustomScrollbar({
 					theme:"light",
 					autoHideScrollbar: false

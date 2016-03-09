@@ -4,6 +4,7 @@
 	include_once '../includes/config.php';
 	include_once '../includes/clients.data.inc.php';
 	include_once '../includes/settings.data.inc.php';
+    include_once("../languages/lang.php");
 
 	$records_per_page = 3;
 
@@ -47,7 +48,7 @@
 
 		<!--Pseudo-Navigationsleiste mit Menu-Button und Anzeige des aktuellen Menu's-->
         <?php
-            $site_name = "Einstellungen";
+            $site_name = $lang['settings'];
             include_once '../includes/navbar-top.php';
         ?>
 
@@ -68,7 +69,7 @@
                                 <!--Widget Header-->
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <h2>Clients</h2>
+                                        <h2><?php echo $lang['clients']; ?></h2>
                                     </div>
                                 </div>
                                 <hr>
@@ -79,7 +80,7 @@
                                         <!--Button: Add Data-->
                                         <div class="row">
                                             <div class="col-xs-12 text-switch-center-left">
-                                                <a class="btn btn-primary btn-big-margin" href="client_update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>  Neuer Client</a>
+                                                <a class="btn btn-primary btn-big-margin" href="client_update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>  <?php echo $lang['new_client']; ?></a>
                                             </div>
                                         </div>
 
@@ -89,9 +90,9 @@
                                                 <table class="table text-left scheduler">
                                                     <thead>
                                                         <tr>
-                                                            <th>Bezeichnung</th>
-                                                            <th>IP</th>
-                                                            <th class="hidden-xs">Beschreibung</th>
+                                                            <th><?php echo $lang['title']; ?></th>
+                                                            <th><?php echo $lang['ip']; ?></th>
+                                                            <th class="hidden-xs"><?php echo $lang['description']; ?></th>
                                                             <th></th>
                                                         </tr>
                                                     </thead>
@@ -144,7 +145,7 @@
                                 <!--Widget Header-->
                                 <div class="row">
                                     <div class="col-xs-12">
-                                        <h2>Allgemeine Einstellungen</h2>
+                                        <h2><?php echo $lang['general_settings']; ?></h2>
                                     </div>
                                 </div>
                                 <hr>
@@ -170,10 +171,10 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <fieldset>
-                                                        <legend class="fieldset">Zeitschaltuhr</legend>
+                                                        <legend class="fieldset"><?php echo $lang['time_switch']; ?></legend>
                                                         <div class="row">
                                                             <div class="col-xs-8 text-left">
-                                                                <label for="scheduler_settings_page_per_view" class="control-label small">Einträge pro Seite</label>
+                                                                <label for="scheduler_settings_page_per_view" class="control-label small"><?php echo $lang['entries_per_site']; ?></label>
                                                             </div>
                                                             <div class="col-xs-2 no_padding text-left">
                                                                 <input type="number" class="form-control fix-width-number" name="scheduler_settings_page_per_view" id="scheduler_settings_page_per_view" value='<?php echo $data_settings['scheduler_settings_page_per_view']; ?>' required>
@@ -181,7 +182,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-xs-8 text-left">
-                                                                <label for="scheduler_preview_period" class="control-label small">Vorschau: Zeitraum</label>
+                                                                <label for="scheduler_preview_period" class="control-label small"><?php echo $lang['preview_period']; ?></label>
                                                             </div>
                                                             <div class="col-xs-2 no_padding text-left">
                                                                 <input type="number" class="form-control fix-width-number" name="scheduler_preview_period" id="scheduler_preview_period" value='<?php echo $data_settings['scheduler_preview_period']; ?>' required>
@@ -189,7 +190,7 @@
                                                         </div>
                                                         <div class="row">
                                                             <div class="col-xs-8 text-left">
-                                                                <label for="scheduler_preview_items" class="control-label small">Vorschau: Anzahl</label>
+                                                                <label for="scheduler_preview_items" class="control-label small"><?php echo $lang['preview_quantity']; ?></label>
                                                             </div>
                                                             <div class="col-xs-2 no_padding text-left">
                                                                 <input type="number" class="form-control fix-width-number" name="scheduler_preview_items" id="scheduler_preview_items" value='<?php echo $data_settings['scheduler_preview_items']; ?>' required>
@@ -201,7 +202,7 @@
 
                                             <div class="row" style="margin-top: 24px">
                                                 <div class="col-xs-12 text-center-right no_padding">
-                                                    <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  Speichern</button>
+                                                    <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  <?php echo $lang['save']; ?></button>
                                                 </div>
                                             </div>
 

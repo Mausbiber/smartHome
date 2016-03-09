@@ -3,6 +3,7 @@
 
 	include_once '../includes/config.php';
 	include_once '../includes/switch_types.data.inc.php';
+    include_once("../languages/lang.php");
 
 	$database = new Config();
 	$db = $database->getConnection();
@@ -60,7 +61,7 @@
 
 		<!--Pseudo-Navigationsleiste mit Menu-Button und Anzeige des aktuellen Menu's-->
         <?php
-            $site_name = "Einstellungen - Clients";
+            $site_name = $lang['settings']." - ".$lang['switching_devices'];
             include_once '../includes/navbar-top.php';
         ?>
 
@@ -81,9 +82,9 @@
                                     <div class="col-xs-12">
                                         <?php
                                             if ($id<0) {
-                                                echo "<h2>neue Art von Schalter anlegen</h2>";
+                                                echo "<h2>".$lang['create_switching_device']."</h2>";
                                             } else {
-                                                echo "<h2>bestehende Schalter-Art ändern</h2>";
+                                                echo "<h2>".$lang['modify_switching_device']."</h2>";
                                             }
                                         ?>
                                     </div>
@@ -93,7 +94,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-5 col-sm-4 col-sm-offset-1 col-lg-3 text-right">
-                                            <label for="title" class="control-label">Name</label>
+                                            <label for="title" class="control-label"><?php echo $lang['title']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-4 col-md-5 no_padding text-left">
                                             <input type="text" class="form-control" name="title" id="title" placeholder="tf_remote_typ_A" value='<?php echo $switch_types->title; ?>' required>
@@ -102,7 +103,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-5 col-sm-4 col-sm-offset-1 col-lg-3 text-right">
-                                            <label for="icon_file" class="control-label">Icon</label>
+                                            <label for="icon_file" class="control-label"><?php echo $lang['icon']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-4 col-md-5 no_padding text-left">
                                             <input type="file" name="icon_file" id="icon_file" class="form-control" required>
@@ -111,7 +112,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-5 col-sm-4 col-sm-offset-1 col-lg-3 text-right">
-                                            <label for="description" class="control-label">Beschreibung</label>
+                                            <label for="description" class="control-label"><?php echo $lang['description']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-4 col-md-5 no_padding text-left">
                                             <textarea style="width:100%" name="description" id="description" class="form-control" rows="3" placeholder="Funk Schalter, ELO, Typ A"><?php echo $switch_types->description; ?></textarea>
@@ -121,10 +122,10 @@
 
                                     <div class="row" style="margin-top: 24px">
                                         <div class="col-xs-12 col-sm-6 text-switch-center-right no_padding">
-                                            <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  Speichern</button>
+                                            <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  <?php echo $lang['save']; ?></button>
                                         </div>
                                         <div class="col-xs-12 col-sm-6 text-switch-center-left no_padding">
-                                            <a class="btn btn-default btn-fix-width" href="switches.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  Abbrechen</a>
+                                            <a class="btn btn-default btn-fix-width" href="switches.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  <?php echo $lang['cancle']; ?></a>
                                         </div>
                                     </div>
 

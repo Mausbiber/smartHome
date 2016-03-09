@@ -4,6 +4,7 @@
 	include_once '../includes/config.php';
 	include_once '../includes/switches.data.inc.php';
 	include_once '../includes/clients.data.inc.php';
+    include_once '../languages/lang.php';
 
 	$database = new Config();
 	$db = $database->getConnection();
@@ -47,7 +48,7 @@
 
 		<!--Pseudo-Navigationsleiste mit Menu-Button und Anzeige des aktuellen Menu's-->
         <?php
-            $site_name = "Einstellungen - Schalter";
+            $site_name = $lang['settings']." - ".$lang['switches'];
             include_once '../includes/navbar-top.php';
         ?>
 
@@ -68,9 +69,9 @@
                                     <div class="col-xs-12">
                                         <?php
                                             if ($id<0) {
-                                                echo "<h2>neuen Schalter anlegen</h2>";
+                                                echo "<h2>".$lang['create_switch']."</h2>";
                                             } else {
-                                                echo "<h2>bestehenden Schalter ändern</h2>";
+                                                echo "<h2>".$lang['modify_switch']."</h2>";
                                             }
                                         ?>
                                     </div>
@@ -102,7 +103,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-5 col-sm-4 col-sm-offset-1 col-lg-3 text-right">
-                                            <label for="title" class="control-label">Name</label>
+                                            <label for="title" class="control-label"><?php echo $lang['title']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-4 col-md-5 no_padding text-left">
                                             <input type="text" class="form-control" name="title" id="title" placeholder="" value='<?php echo $switches->title; ?>' required>
@@ -111,7 +112,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-5 col-sm-4 col-sm-offset-1 col-lg-3 text-right">
-                                            <label for="client_title" class="control-label">Client</label>
+                                            <label for="client_title" class="control-label"><?php echo $lang['client']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-2 col-md-3 no_padding text-left">
                                             <select class="form-control" name="client_title" id="client_title">
@@ -131,7 +132,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-5 col-sm-4 col-sm-offset-1 col-lg-3 text-right">
-                                            <label for="switch_type_title" class="control-label">Schalter-Art</label>
+                                            <label for="switch_type_title" class="control-label"><?php echo $lang['switching_device']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-2 col-md-3 no_padding text-left">
                                             <select class="form-control" name="switch_type_title" id="switch_type_title">
@@ -151,7 +152,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-5 col-sm-4 col-sm-offset-1 col-lg-3 text-right">
-                                            <label class="control-label">Argumente</label>
+                                            <label class="control-label"><?php echo $lang['arguments']; ?></label>
                                         </div>
                                         <div class="col-xs-5 col-sm-4 col-md-7">
                                             <div class="row">
@@ -173,7 +174,7 @@
 
                                     <div class="row">
                                         <div class="col-xs-5 col-sm-4 col-sm-offset-1 col-lg-3 text-right">
-                                            <label for="description" class="control-label">Beschreibung</label>
+                                            <label for="description" class="control-label"><?php echo $lang['description']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-4 col-md-5 no_padding text-left">
                                             <textarea style="width:100%" name="description" id="description" class="form-control" rows="3" placeholder=""><?php echo $switches->description; ?></textarea>
@@ -183,10 +184,10 @@
 
                                     <div class="row" style="margin-top: 24px">
                                         <div class="col-xs-12 col-sm-6 text-switch-center-right no_padding">
-                                            <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  Speichern</button>
+                                            <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  <?php echo $lang['save']; ?></button>
                                         </div>
                                         <div class="col-xs-12 col-sm-6 text-switch-center-left no_padding">
-                                            <a class="btn btn-default btn-fix-width" href="switches.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  Abbrechen</a>
+                                            <a class="btn btn-default btn-fix-width" href="switches.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  <?php echo $lang['cancle']; ?></a>
                                         </div>
                                     </div>
 

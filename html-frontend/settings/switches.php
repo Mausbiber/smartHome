@@ -4,6 +4,7 @@
 	include_once '../includes/config.php';
 	include_once '../includes/switch_types.data.inc.php';
 	include_once '../includes/switches.data.inc.php';
+    include_once '../languages/lang.php';
 
 	$records_per_page = 3;
     $startWidget = 0;
@@ -63,7 +64,7 @@
 
 		<!--Pseudo-Navigationsleiste mit Menu-Button und Anzeige des aktuellen Menu's-->
         <?php
-            $site_name = "Einstellungen";
+            $site_name = $lang['switches']." & ".$lang['switching_devices'];
             include_once '../includes/navbar-top.php';
         ?>
 
@@ -118,7 +119,7 @@
                                             <!--Widget Header-->
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <h2>Schalter</h2>
+                                                    <h2><?php echo $lang['switches']; ?></h2>
                                                 </div>
                                             </div>
                                             <hr>
@@ -129,7 +130,7 @@
                                                     <!--Button: Add Data-->
                                                     <div class="row">
                                                         <div class="col-xs-12 text-switch-center-left">
-                                                            <a class="btn btn-primary btn-big-margin" href="switch_update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>  Neuer Schalter</a>
+                                                            <a class="btn btn-primary btn-big-margin" href="switch_update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>  <?php echo $lang['new_switch']; ?></a>
                                                         </div>
                                                     </div>
 
@@ -139,11 +140,11 @@
                                                             <table class="table text-left scheduler">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Bezeichnung</th>
-                                                                        <th class="hidden-xs">Client</th>
+                                                                        <th><?php echo $lang['title']; ?></th>
+                                                                        <th class="hidden-xs"><?php echo $lang['client']; ?></th>
                                                                         <th class="hidden-sm hidden-md hidden-lg"></th>
-                                                                        <th class="hidden-xs">Schalter-Art</th>
-                                                                        <th class="hidden-xs">Beschreibung</th>
+                                                                        <th class="hidden-xs"><?php echo $lang['switching_device']; ?></th>
+                                                                        <th class="hidden-xs"><?php echo $lang['description']; ?></th>
                                                                         <th></th>
                                                                     </tr>
                                                                 </thead>
@@ -197,7 +198,7 @@
                                             <!--Widget Header-->
                                             <div class="row">
                                                 <div class="col-xs-12">
-                                                    <h2>Schalter-Arten/-Typen</h2>
+                                                    <h2><?php echo $lang['switching_devices']; ?></h2>
                                                 </div>
                                             </div>
                                             <hr>
@@ -208,7 +209,7 @@
                                                     <!--Button: Add Data-->
                                                     <div class="row">
                                                         <div class="col-xs-12 text-switch-center-left">
-                                                            <a class="btn btn-primary btn-big-margin" href="switch_type_update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>  Neue Art von Schalter</a>
+                                                            <a class="btn btn-primary btn-big-margin" href="switch_type_update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>  <?php echo $lang['new_switching_device']; ?></a>
                                                         </div>
                                                     </div>
 
@@ -218,9 +219,9 @@
                                                             <table class="table text-left scheduler">
                                                                 <thead>
                                                                     <tr>
-                                                                        <th>Bezeichnung</th>
-                                                                        <th>Icon</th>
-                                                                        <th class="hidden-xs">Beschreibung</th>
+                                                                        <th><?php echo $lang['title']; ?></th>
+                                                                        <th><?php echo $lang['icon']; ?></th>
+                                                                        <th class="hidden-xs"><?php echo $lang['description']; ?></th>
                                                                         <th></th>
                                                                     </tr>
                                                                 </thead>

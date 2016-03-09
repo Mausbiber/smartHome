@@ -290,10 +290,13 @@ class DataScheduler{
 	
 	function scheduled_events_enter(&$index, $datum, $title, $icon, $status) {
 		$index++;
-		$tage = array("Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag");
-		$this->events[$index]['sort'] = $datum->format("d.m.Y - H:i");
-		$this->events[$index]['datum'] = $datum->format("d.m.Y");
-		$this->events[$index]['wochentag'] = $tage[$datum->format("w")];
+        if (get_lang_id()=="en") {
+            $this->events[$index]['datum'] = $datum->format("m-d-Y");
+        } else {
+            $this->events[$index]['datum'] = $datum->format("d.m.Y");
+        }
+        $this->events[$index]['sort'] = $datum->format("d.m.Y - H:i");
+		$this->events[$index]['wochentag'] = $datum->format("w");
 		$this->events[$index]['uhrzeit'] = $datum->format("H:i");
 		$this->events[$index]['scheduler_title'] = $title;
 		$this->events[$index]['status'] = $status;

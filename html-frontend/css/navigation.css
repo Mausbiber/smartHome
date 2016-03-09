@@ -154,3 +154,18 @@ TIME & DATE
 	}
     
 }
+
+
+li.language-toggle {
+    list-style-type: none;
+	padding-right: 24px;
+    float: right;
+}
+a.language-toggle {
+	font-size: 16px;
+	font-weight: 400;
+	color: #C7C7C7;
+	line-height: 50px;
+	vertical-align: middle;
+
+}

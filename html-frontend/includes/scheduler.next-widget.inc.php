@@ -1,5 +1,5 @@
 <?php
-    $events = $scheduler->scheduled_events_list("+14 days");
+    $events = $scheduler->scheduled_events_list("+7 days");
     if (count($events)>0) {
 ?>
 <div class="row">
@@ -7,7 +7,7 @@
        	<article class="title-widget no_padding_bottom">
 	        <div class="row">
     	        <div class="col-xs-12">
-                	<h2>anstehende Schaltungen ...</h2>
+                	<h2><?php echo $lang['upcoming_cycle_times']; ?></h2>
 	            </div>
     	    </div>
         	<hr class="no_margin_bottom">
@@ -41,7 +41,8 @@
 				}
 						echo '<div class="row">';
 							echo '<div class="col-xs-3 col-md-4">';
-								echo '<h3 class="text-center">'.$item['wochentag'].'</h3>';
+                                $tage = array($lang['sunday'],$lang['monday'],$lang['tuesday'],$lang['wednesday'],$lang['thursday'],$lang['friday'],$lang['saturday']);
+								echo '<h3 class="text-center">'.$tage[$item['wochentag']].'</h3>';
 								echo '<h3 class="text-center">'.$item['datum'].'</h3>';
 							echo '</div>';
 							$tag_old = $tag_new;

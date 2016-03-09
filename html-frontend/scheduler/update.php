@@ -3,6 +3,7 @@
 
 	include_once '../includes/config.php';
 	include_once '../includes/scheduler.data.inc.php';
+    include_once("../languages/lang.php");
 	 
 	$database = new Config();
 	$db = $database->getConnection();
@@ -49,7 +50,7 @@
 
 		<!--Pseudo-Navigationsleiste mit Menu-Button und Anzeige des aktuellen Menu's-->
         <?php
-            $site_name = "Zeitschaltuhr";
+            $site_name = $lang['time_switch'];
             include_once '../includes/navbar-top.php';
         ?>
     
@@ -70,9 +71,9 @@
                                     <div class="col-xs-12">
                                         <?php
                                             if ($id<0) {
-                                                echo "<h2>Schaltplan erstellen</h2>";
+                                                echo "<h2>".$lang['create_cycle_time']."</h2>";
                                             } else {
-                                                echo "<h2>Schaltplan ändern</h2>";
+                                                echo "<h2>".$lang['modify_cycle_time']."</h2>";
                                             }
                                         ?>
                                     </div>
@@ -114,7 +115,7 @@
                                         <div class="col-xs-12 col-sm-5">
                                             <div class="row form-inline">
                                                 <div class="col-xs-4 col-sm-6 col-md-4 col-lg-5 text-right">
-                                                    <label for="title" class="control-label">Name</label>
+                                                    <label for="title" class="control-label"><?php echo $lang['title']; ?></label>
                                                 </div>
                                                 <div class="col-xs-6 col-md-8 col-lg-7 no_padding text-left">
                                                     <input type="text" class="form-control" name="title" id="title" placeholder="Wohnzimmerpflanzen" value='<?php echo $scheduler->title; ?>' required>
@@ -124,7 +125,7 @@
                                         <div class="col-xs-12 col-sm-6 col-lg-7">
                                             <div class="row form-inline">
                                                 <div class="col-xs-4 col-sm-3 text-right">
-                                                    <label for="device" class="control-label">Schalter</label>
+                                                    <label for="device" class="control-label"><?php echo $lang['switch']; ?></label>
                                                 </div>
                                                 <div class="col-xs-6 no_padding text-left">
                                                     <select class="form-control" name="switch_command" id="switch_command">
@@ -150,7 +151,7 @@
                                         <div class="col-xs-12 col-sm-5">
                                             <div class="row form-inline">
                                                 <div class="col-xs-4 col-sm-6 col-md-4 col-lg-5 text-right">
-                                                    <label for="str_date_start" class="control-label">Datum</label>
+                                                    <label for="str_date_start" class="control-label"><?php echo $lang['date']; ?></label>
                                                 </div>
                                                 <div class="col-xs-6 col-md-8 col-lg-7 text-left no_padding ">
                                                     <div class="input-group date datepicker no_padding ">
@@ -162,7 +163,7 @@
                                         <div class="col-xs-12 col-sm-6 col-lg-7">
                                             <div class="row form-inline">
                                                 <div class="col-xs-4 col-sm-3 text-right">
-                                                    <label for="str_time_start" class="control-label">von</label>
+                                                    <label for="str_time_start" class="control-label"><?php echo $lang['from']; ?></label>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3 no_padding text-left">
                                                     <div class="input-group clockpicker">
@@ -171,7 +172,7 @@
                                                 </div>
                                                 <div class="clearfix visible-xs-block"></div>
                                                 <div class="col-xs-4 col-sm-1 no_padding_extra text-switch-right-center">
-                                                    <label for="str_time_stop" class="control-label">bis</label>
+                                                    <label for="str_time_stop" class="control-label"><?php echo $lang['to']; ?></label>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-4 col-lg-3 no_padding text-left">
                                                     <div class="input-group clockpicker">
@@ -186,7 +187,7 @@
                                         <div class="col-xs-12 col-sm-5">
                                             <div class="row form-inline">
                                                 <div class="col-xs-4 col-sm-6 col-md-4 col-lg-5 text-right">
-                                                    <label for="str_date_stop" class="control-label">Ende</label>
+                                                    <label for="str_date_stop" class="control-label"><?php echo $lang['finish']; ?></label>
                                                 </div>
                                                 <div class="col-xs-6 col-md-8 col-lg-7 no_padding text-left">
                                                     <div class="input-group date datepicker no_padding ">
@@ -198,13 +199,13 @@
                                         <div class="col-xs-12 col-sm-6 col-lg-7">
                                             <div class="row">
                                                 <div class="col-xs-4 col-sm-3 text-right">
-                                                    <label class="control-label">Dauer</label>
+                                                    <label class="control-label"><?php echo $lang['duration']; ?></label>
                                                 </div>
                                                 <div class="col-xs-7 col-xs-offset-1 col-sm-offset-0 no_padding text-left">
                                                     <div class="form-group">
-                                                        <label class="radio-scheduler"><input name="duration" id="duration" value="einmalig" type="radio" class="radio-scheduler" <?php if ($scheduler->duration=='einmalig') echo "checked" ?>>einmalig Durchlauf</label>
-                                                        <label class="radio-scheduler"><input name="duration" id="duration" value="intervall" type="radio" class="radio-scheduler" data-toggle="modal" data-target="#modalIntervall" <?php if ($scheduler->duration=='intervall') echo "checked" ?>>Wiederholung in Intervallen</label>
-                                                        <label class="radio-scheduler"><input name="duration" id="duration" value="wochentag" type="radio" class="radio-scheduler" data-toggle="modal" data-target="#modalWochentag" <?php if ($scheduler->duration=='wochentag') echo "checked" ?>>Wiederholung an Wochentagen</label>
+                                                        <label class="radio-scheduler"><input name="duration" id="duration" value="einmalig" type="radio" class="radio-scheduler" <?php if ($scheduler->duration=='einmalig') echo "checked" ?>><?php echo $lang['unique_pass']; ?></label>
+                                                        <label class="radio-scheduler"><input name="duration" id="duration" value="intervall" type="radio" class="radio-scheduler" data-toggle="modal" data-target="#modalIntervall" <?php if ($scheduler->duration=='intervall') echo "checked" ?>><?php echo $lang['repeat_in_intervals']; ?></label>
+                                                        <label class="radio-scheduler"><input name="duration" id="duration" value="wochentag" type="radio" class="radio-scheduler" data-toggle="modal" data-target="#modalWochentag" <?php if ($scheduler->duration=='wochentag') echo "checked" ?>><?php echo $lang['repeat_on_weekdays']; ?></label>
                                                     </div>												
                                                 </div>    
                                             </div>
@@ -213,10 +214,10 @@
                                     
                                     <div class="row">
                                         <div class="col-xs-12 col-sm-6 text-switch-center-right no_padding">
-                                            <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  Speichern</button>
+                                            <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  <?php echo $lang['save']; ?></button>
                                         </div>
                                         <div class="col-xs-12 col-sm-6 text-switch-center-left no_padding">
-                                            <a class="btn btn-default btn-fix-width" href="index.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  Abbrechen</a>
+                                            <a class="btn btn-default btn-fix-width" href="index.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  <?php echo $lang['cancle']; ?></a>
                                         </div>
                                     </div>
 
@@ -225,13 +226,13 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title" id="modalIntervallLabel">Intervall</h4>
+                                                    <h4 class="modal-title" id="modalIntervallLabel"><?php echo $lang['interval']; ?></h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="row form-inline no_padding">
                                                         <div class="col-xs-4 col-sm-4 col-sm-offset-1 text-right">
-                                                            <label for="interval_number" class="control-label small hidden-sm hidden-md hidden-lg">wiederhole:</label>
-                                                            <label for="interval_number" class="control-label small hidden-xs">wiederhole alle:</label>
+                                                            <label for="interval_number" class="control-label small hidden-sm hidden-md hidden-lg"><?php echo $lang['repeat']; ?>:</label>
+                                                            <label for="interval_number" class="control-label small hidden-xs"><?php echo $lang['repeat_all']; ?>:</label>
                                                         </div>
                                                         <div class="col-xs-3 col-sm-2">
                                                             <div class="input-group">
@@ -240,10 +241,10 @@
                                                         </div>
                                                         <div class="col-xs-4 col-sm-3 no_padding">
                                                             <select class="form-control" name="interval_unit" id="interval_unit" value='<?php echo $scheduler->intervalUnit; ?>'>
-                                                              <option <?php if ($scheduler->intervalUnit=='Minuten') echo "selected"?>>Minuten</option>
-                                                              <option <?php if ($scheduler->intervalUnit=='Stunden') echo "selected"?>>Stunden</option>
-                                                              <option <?php if ($scheduler->intervalUnit=='Tage') echo "selected"?>>Tage</option>
-                                                              <option <?php if ($scheduler->intervalUnit=='Wochen') echo "selected"?>>Wochen</option>
+                                                              <option <?php if ($scheduler->intervalUnit=='Minuten') echo "selected"?>><?php echo $lang['minutes']; ?></option>
+                                                              <option <?php if ($scheduler->intervalUnit=='Stunden') echo "selected"?>><?php echo $lang['hours']; ?></option>
+                                                              <option <?php if ($scheduler->intervalUnit=='Tage') echo "selected"?>><?php echo $lang['days']; ?></option>
+                                                              <option <?php if ($scheduler->intervalUnit=='Wochen') echo "selected"?>><?php echo $lang['weeks']; ?>n</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -260,35 +261,35 @@
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h4 class="modal-title" id="modalWochentagLabel">Intervall</h4>
+                                                    <h4 class="modal-title" id="modalWochentagLabel"><?php echo $lang['interval']; ?></h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <fieldset>
                                                         <div class="row">
-                                                            <div class="col-xs-4 col-sm-3 col-sm-offset-1 text-left">
-                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_monday" id="weekly_monday" <?php if ($scheduler->weeklyMonday) echo "checked" ?>> Montag</label>
+                                                            <div class="col-xs-4 text-left">
+                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_monday" id="weekly_monday" <?php if ($scheduler->weeklyMonday) echo "checked" ?>> <?php echo $lang['monday']; ?></label>
                                                             </div>
-                                                            <div class="col-xs-4 col-sm-3 text-left">
-                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_tuesday" id="weekly_tuesday" <?php if ($scheduler->weeklyTuesday) echo "checked" ?>> Dienstag</label>
+                                                            <div class="col-xs-4 text-left">
+                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_tuesday" id="weekly_tuesday" <?php if ($scheduler->weeklyTuesday) echo "checked" ?>> <?php echo $lang['tuesday']; ?></label>
                                                             </div>
-                                                            <div class="col-xs-4 col-sm-3 text-left">
-                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_wednesday" id="weekly_wednesday" <?php if ($scheduler->weeklyWednesday) echo "checked" ?>> Mittwoch</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row">
-                                                            <div class="col-xs-4 col-sm-3 col-sm-offset-1 text-left">
-                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_thursday" id="weekly_thursday" <?php if ($scheduler->weeklyThursday) echo "checked" ?>> Donnerstag</label>
-                                                            </div>
-                                                            <div class="col-xs-4 col-sm-3 text-left">
-                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_friday" id="weekly_friday" <?php if ($scheduler->weeklyFriday) echo "checked" ?>> Freitag</label>
-                                                            </div>
-                                                            <div class="col-xs-4 col-sm-3 text-left">
-                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_saturday" id="weekly_saturday" <?php if ($scheduler->weeklySaturday) echo "checked" ?>> Samstag</label>
+                                                            <div class="col-xs-4 text-left">
+                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_wednesday" id="weekly_wednesday" <?php if ($scheduler->weeklyWednesday) echo "checked" ?>> <?php echo $lang['wednesday']; ?></label>
                                                             </div>
                                                         </div>
                                                         <div class="row">
-                                                            <div class="col-xs-4 col-sm-3 col-sm-offset-1 text-left">
-                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_sunday" id="weekly_sunday" <?php if ($scheduler->weeklySunday) echo "checked" ?>> Sonntag</label>
+                                                            <div class="col-xs-4 text-left">
+                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_thursday" id="weekly_thursday" <?php if ($scheduler->weeklyThursday) echo "checked" ?>> <?php echo $lang['thursday']; ?></label>
+                                                            </div>
+                                                            <div class="col-xs-4 text-left">
+                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_friday" id="weekly_friday" <?php if ($scheduler->weeklyFriday) echo "checked" ?>> <?php echo $lang['friday']; ?></label>
+                                                            </div>
+                                                            <div class="col-xs-4 text-left">
+                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_saturday" id="weekly_saturday" <?php if ($scheduler->weeklySaturday) echo "checked" ?>> <?php echo $lang['saturday']; ?></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-xs-4 text-left">
+                                                                <label class="control-label small"><input type="checkbox" value="true" name="weekly_sunday" id="weekly_sunday" <?php if ($scheduler->weeklySunday) echo "checked" ?>> <?php echo $lang['sunday']; ?></label>
                                                             </div>
                                                         </div>
                                                         <br>
