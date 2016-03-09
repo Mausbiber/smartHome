@@ -9,7 +9,8 @@ import json
 from tinkerforge.ip_connection import IPConnection
 from lib_tinkerforge import BrickletQuadRelay, BrickletRemote, BrickletDualRelay
 import lib_sispm
-#import lib_gpio
+import lib_simpliboxio
+# import lib_gpio
 
 import pymysql
 import websockets
@@ -169,6 +170,15 @@ def get_switches():
             switches_info[result['switches_id'], "index"] = "sis_usb_socket"
             switches[switches_info[result['switches_id'], "index"]] = lib_sispm.Sispm(result['switches_id'], DEVICE_IP,
                                                                                       logger, consumers)
+
+        #
+        # set up SimpliBoxIO
+        #
+        elif result['switches_typ'] == "simplibox_io_usb":
+            switches_info[result['switches_id'], "index"] = "simplibox_io_usb"
+            switches[switches_info[result['switches_id'], "index"]] = lib_simpliboxio.SimpliBoxIO(result['switches_id'],
+                                                                                                  DEVICE_IP, logger,
+                                                                                                  consumers)
 
         #
         # set up raspi gpio pins
