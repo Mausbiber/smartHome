@@ -90,10 +90,10 @@ def message_handler(_tmp_message):
     message = json.loads(_tmp_message)
 
     # extract variables from json
-    message_usage = message[0]
-    message_ip = message[1]
-    message_id = message[2]
-    message_value = message[3]
+    message_usage = message["usage"]
+    message_ip = message["ip"]
+    message_id = message["id"]
+    message_value = message["value"]
 
     if message_ip == DEVICE_IP:
         if message_usage == "switch_turn":
