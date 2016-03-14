@@ -27,8 +27,7 @@ def on_exit(sig, func=None):
 
 def action(scheduler_id, switch_id, switch_ip, switch_to, date_stop):
     check_date_stop(scheduler_id, switch_to, date_stop)
-    # _data = [scheduler_id, switch_to, arg_a, arg_b, arg_c, arg_d]
-    send_to_clients(json.dumps(["switch_turn", switch_ip, switch_id, switch_to]))
+    send_to_clients(json.dumps({"usage": "switch_turn", "ip": switch_ip, "id": switch_id, "value": switch_to}))
 
 
 def check_date_stop(scheduler_id, switch_to, date_stop):
@@ -148,10 +147,10 @@ def gui_message_handler(_tmp_message):
     message = json.loads(_tmp_message)
 
     # extract variables from json
-    message_usage = message[0]
-    message_ip = message[1]
-    message_id = message[2]
-    message_value = message[3]
+    message_usage = message["usage"]
+    message_ip = message["ip"]
+    message_id = message["id"]
+    message_value = message["value"]
 
     logger.debug(
             'websockets .... GUI -> Nachricht %s von %s -> %s : %s' % (
@@ -162,22 +161,20 @@ def gui_message_handler(_tmp_message):
     #        consumer(_tmp)
     #    return False
 
-    if message_usage == "":
-        return False
-    elif message_usage == "timerswitch_new":
+    if message_usage == "timerswitch_new":
         # new timerswitch entry from gui
-        timer.load(message_value)
-        return False
+        timer.load(int(message_id))
+        return json.dumps({"usage": "timerswitch_new", "ip": "", "id": message_id, "value": True})
     elif message_usage == "timerswitch_update":
         # changed timerswitch entry from gui
-        timer.reload(message_value)
-        return False
+        timer.reload(message_id)
+        return json.dumps({"usage": "timerswitch_update", "ip": "", "id": message_id, "value": True})
     elif message_usage == "timerswitch_delete":
         # deleted timerswitch entry from gui
-        timer.delete_job(message_value)
+        timer.delete_job(message_id)
+        return json.dumps({"usage": "timerswitch_delete", "ip": "", "id": message_id, "value": True})
+    else:
         return False
-    #else:
-        #return send_to_clients(_tmp_message)
 
 
 def send_to_clients(_tmp):
@@ -191,10 +188,10 @@ def clients_message_handler(_tmp_message):
     message = json.loads(_tmp_message)
 
     # extract variables from json
-    message_usage = message[0]
-    message_ip = message[1]
-    message_id = message[2]
-    message_value = message[3]
+    message_usage = message["usage"]
+    message_ip = message["ip"]
+    message_id = message["id"]
+    message_value = message["value"]
 
     logger.debug(
             'websockets .... Clients -> Nachricht %s von %s -> %s : %s' % (
