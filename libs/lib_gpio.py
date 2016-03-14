@@ -24,7 +24,12 @@ class RaspiGPIO:
             GPIO.output(int(arg_a), GPIO.LOW)
         self._logging_daemon.debug(
             'RaspiGPIO ..... geschaltet Pin %s , SOLL = %s , IST = %s' % (arg_a, switch_to, self.status(arg_a)))
-        tmp_json = json.dumps(["switch_changed_status", self.ip, self.switch_id, switch_to])
+        tmp_json = json.dumps({
+            "usage": "switch_changed_status",
+            "ip": self.ip,
+            "id": self.switch_id,
+            "value": switch_to
+        })
         for consumer in self._queue:
             consumer(tmp_json)
             self._logging_daemon.info(

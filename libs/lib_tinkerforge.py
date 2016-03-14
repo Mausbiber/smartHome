@@ -367,7 +367,12 @@ class BrickletDualRelay:
         self._logging_daemon.debug(
             'Tinkerforge ... DualRelay-Bricklet UID "%s" , geschaltet Relais %s , SOLL = %s , IST = %s' % (
                 self.uid, arg_b, switch_to, self.status(arg_b)))
-        tmp_json = json.dumps(["switch_changed_status", self.ip, self.switch_id, switch_to])
+        tmp_json = json.dumps({
+            "usage": "switch_changed_status",
+            "ip": self.ip,
+            "id": self.switch_id,
+            "value": switch_to
+        })
         for consumer in self._queue:
             consumer(tmp_json)
             self._logging_daemon.info(
@@ -396,7 +401,12 @@ class BrickletQuadRelay:
         self._logging_daemon.debug(
             'Tinkerforge ... QuadRelay-Bricklet UID "%s" , geschaltet Relais %s , SOLL = %s , IST = %s' % (
                 self.uid, arg_b, switch_to, self.status(arg_b)))
-        tmp_json = json.dumps(["switch_changed_status", self.ip, self.switch_id, switch_to])
+        tmp_json = json.dumps({
+            "usage": "switch_changed_status",
+            "ip": self.ip,
+            "id": self.switch_id,
+            "value": switch_to
+        })
         for consumer in self._queue:
             consumer(tmp_json)
             self._logging_daemon.info(
@@ -436,7 +446,12 @@ class BrickletRemote:
             self._logging_daemon.debug(
                 'Tinkerforge ... RemoteSwitch-Bricklet UID "%s" , geschaltet %s %s %s, SOLL = %s , ' %
                 (self.uid, arg_b, arg_c, arg_d, switch_to))
-            tmp_json = json.dumps(["switch_changed_status", self.ip, self.switch_id, switch_to])
+            tmp_json = json.dumps({
+                "usage": "switch_changed_status",
+                "ip": self.ip,
+                "id": self.switch_id,
+                "value": switch_to
+            })
             for consumer in self._queue:
                 consumer(tmp_json)
                 self._logging_daemon.info(
