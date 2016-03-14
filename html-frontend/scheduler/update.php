@@ -43,7 +43,38 @@
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
         <![endif]-->
 
-		<script src="../js/timer_python_bridge.js"></script>
+
+        <?php
+            if($_POST){
+
+                $scheduler->title = $_POST['title'];
+                $scheduler->switchCommand = $_POST['switch_command'];
+                $scheduler->strDateStart = $_POST['str_date_start'];
+                $scheduler->strTimeStart = $_POST['str_time_start'];
+                $scheduler->strTimeStop = $_POST['str_time_stop'];
+                $scheduler->strDateStop = $_POST['str_date_stop'];
+                $scheduler->duration = $_POST['duration'];
+                $scheduler->intervalNumber = $_POST['interval_number'];
+                $scheduler->intervalUnit = $_POST['interval_unit'];
+                $scheduler->weeklyMonday = $_POST['weekly_monday'];
+                $scheduler->weeklyTuesday = $_POST['weekly_tuesday'];
+                $scheduler->weeklyWednesday = $_POST['weekly_wednesday'];
+                $scheduler->weeklyThursday = $_POST['weekly_thursday'];
+                $scheduler->weeklyFriday = $_POST['weekly_friday'];
+                $scheduler->weeklySaturday = $_POST['weekly_saturday'];
+                $scheduler->weeklySunday = $_POST['weekly_sunday'];
+
+                if ($id<0) {
+                    $tmp = $scheduler->create();
+                    if($tmp>0) header("location: update_status.php?usage=timerswitch_new&id=".$tmp);
+                    exit;
+                } else {
+                    $tmp = $scheduler->update();
+                    if($tmp) header("location: update_status.php?usage=timerswitch_update&id=".$scheduler->id);
+                    exit;
+                }
+            }
+        ?>
     </head>
     
     <body>
@@ -79,36 +110,6 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <?php
-                                    if($_POST){
-                                     
-                                        $scheduler->title = $_POST['title'];
-                                        $scheduler->switchCommand = $_POST['switch_command'];
-                                        $scheduler->strDateStart = $_POST['str_date_start'];
-                                        $scheduler->strTimeStart = $_POST['str_time_start'];
-                                        $scheduler->strTimeStop = $_POST['str_time_stop'];
-                                        $scheduler->strDateStop = $_POST['str_date_stop'];
-                                        $scheduler->duration = $_POST['duration'];
-                                        $scheduler->intervalNumber = $_POST['interval_number'];
-                                        $scheduler->intervalUnit = $_POST['interval_unit'];
-                                        $scheduler->weeklyMonday = $_POST['weekly_monday'];
-                                        $scheduler->weeklyTuesday = $_POST['weekly_tuesday'];
-                                        $scheduler->weeklyWednesday = $_POST['weekly_wednesday'];
-                                        $scheduler->weeklyThursday = $_POST['weekly_thursday'];
-                                        $scheduler->weeklyFriday = $_POST['weekly_friday'];
-                                        $scheduler->weeklySaturday = $_POST['weekly_saturday'];
-                                        $scheduler->weeklySunday = $_POST['weekly_sunday'];
-                                        
-                                        if ($id<0) {
-                                            $tmp = $scheduler->create();
-                                            if($tmp>0) echo "<script type=\"text/javascript\">TimerNew($tmp);</script>";
-                                        } else {
-                                            $tmp = $scheduler->update();
-                                            if($tmp) echo "<script type=\"text/javascript\">TimerUpdate($scheduler->id);</script>";
-                                        }
-    
-                                     }
-                                ?>
                                 <form method="post">
                                 	<!-- Main-Form -->
                                     <div class="row">

@@ -62,6 +62,10 @@
     $lang['days'] = 'Days';
     $lang['weeks'] = 'Weeks';
     $lang['weekdays'] = 'Weekdays';
+    $lang['sending_data_to_server'] = 'Sending Data to Server';
+    $lang['connecting_to_server'] = 'Connecting to Server ... ';
+    $lang['send_data'] = 'Sending Data ... ';
+    $lang['waiting_for_response'] = 'Waiting for Response ... ';
 
 	// Widget anstehende Schaltzeiten xxxx
     $lang['upcoming_cycle_times'] = 'Upcoming Cycle Times ...';
