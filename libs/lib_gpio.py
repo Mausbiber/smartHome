@@ -8,15 +8,16 @@ class RaspiGPIO:
         self.ip = ip
         self._logging_daemon = logging_daemon
         self._queue = queue
-        GPIO.setmode(GPIO.BOARD)
         self._logging_daemon.info('RaspiGPIO ..... initialisiert')
 
     @staticmethod
     def status(number):
-        GPIO.setup(int(number), GPIO.IN)
+        GPIO.setmode(GPIO.BOARD)
+        # GPIO.setup(int(number), GPIO.IN)
         return GPIO.input(int(number))
 
     def set_switch(self, switch_to, arg_a, arg_b, arg_c, arg_d):
+        GPIO.setmode(GPIO.BOARD)
         GPIO.setup(int(arg_a), GPIO.OUT)
         if switch_to:
             GPIO.output(int(arg_a), GPIO.HIGH)
