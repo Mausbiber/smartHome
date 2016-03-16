@@ -17,11 +17,11 @@
 	}
 
     if($_POST){
-        $switch_types->title = $_POST['title'];
+        $switch_types->title = htmlentities(strip_tags($_POST['title']));
         $switch_types->icon = $_FILES['icon_file']['name'];
         $switch_types->icon_tmp = $_FILES['icon_file']['tmp_name'];
         $switch_types->icon_size = $_FILES['icon_file']['size'];
-        $switch_types->description = $_POST['description'];
+        $switch_types->description = htmlentities(strip_tags($_POST['description']));
 
          if ($id<0) {
             $tmp = $switch_types->create();

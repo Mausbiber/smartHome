@@ -47,7 +47,7 @@
         <?php
             if($_POST){
 
-                $scheduler->title = $_POST['title'];
+                $scheduler->title = htmlentities(strip_tags($_POST['title']));
                 $scheduler->switchCommand = $_POST['switch_command'];
                 $scheduler->strDateStart = $_POST['str_date_start'];
                 $scheduler->strTimeStart = $_POST['str_time_start'];

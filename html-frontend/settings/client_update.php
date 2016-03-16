@@ -77,9 +77,9 @@
                                 <?php
                                     if($_POST){
 
-                                        $clients->title = $_POST['title'];
+                                        $clients->title = htmlentities(strip_tags($_POST['title']));
                                         $clients->ip = $_POST['ip'];
-                                        $clients->description = $_POST['description'];
+                                        $clients->description = htmlentities(strip_tags($_POST['description']));
 
                                         if ($id<0) {
                                             $tmp = $clients->create();

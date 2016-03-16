@@ -85,6 +85,11 @@
                 var temp = parts[i].split("=");
                 $_GET[decodeURIComponent(temp[0])] = decodeURIComponent(temp[1]);
             }
+            $_GET.usage = htmlEntities($_GET.usage)
+
+            if (isNaN($_GET.id) == true ) {
+                window.setTimeout(function(){window.location = "index.php"},500);
+            }
 
             var socketServer = new WebSocket('ws://192.168.127.20:5505');
 

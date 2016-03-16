@@ -80,14 +80,14 @@
                                 <?php
                                     if($_POST){
 
-                                        $switches->title = $_POST['title'];
-                                        $switches->description = $_POST['description'];
+                                        $switches->title = htmlentities(strip_tags($_POST['title']));
+                                        $switches->description = htmlentities(strip_tags($_POST['description']));
                                         $switches->clientTitle = $_POST['client_title'];
                                         $switches->switchTypTitle = $_POST['switch_type_title'];
-                                        $switches->argA = $_POST['arg_a'];
-                                        $switches->argB = $_POST['arg_b'];
-                                        $switches->argC = $_POST['arg_c'];
-                                        $switches->argD = $_POST['arg_d'];
+                                        $switches->argA = htmlentities(strip_tags($_POST['arg_a']));
+                                        $switches->argB = htmlentities(strip_tags($_POST['arg_b']));
+                                        $switches->argC = htmlentities(strip_tags($_POST['arg_c']));
+                                        $switches->argD = htmlentities(strip_tags($_POST['arg_d']));
 
                                         if ($id<0) {
                                             $tmp = $switches->create();
