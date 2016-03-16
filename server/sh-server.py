@@ -1,6 +1,7 @@
 # !/usr/bin/env python3
 
 import asyncio
+import socket
 from asyncio.queues import Queue
 import logging
 from datetime import datetime
@@ -11,6 +12,11 @@ from lib_timerswitch import TimerSwitch
 import sys
 import signal
 from config import *
+
+SERVER_IP = [l for l in (
+    [ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")][:1], [
+        [(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in
+         [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
 
 consumers_clients = []
 consumers_gui = []
