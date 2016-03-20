@@ -115,18 +115,18 @@ def get_switches():
     #
     # get a list of all switches for this client
     #
-    sql = "SELECT " \
-          "switches.id AS switches_id, " \
-          "switches.title AS switches_title, " \
-          "switches.argA, " \
-          "switches.argB, " \
-          "switches.argC, " \
-          "switches.argD, " \
-          "switch_types.title AS switches_typ " \
-          "FROM switches, switch_types, clients " \
-          "WHERE clients.ip = %s " \
-          "AND switches.switch_types_id = switch_types.id " \
-          "AND switches.clients_id = clients.id"
+    sql = """SELECT
+          switches.id AS switches_id,
+          switches.title AS switches_title,
+          switches.argA,
+          switches.argB,
+          switches.argC,
+          switches.argD,
+          switch_types.title AS switches_typ
+          FROM switches, switch_types, clients
+          WHERE clients.ip = %s
+          AND switches.switch_types_id = switch_types.id
+          AND switches.clients_id = clients.id"""
     mysql_cursor.execute(sql, str(DEVICE_IP))
     results = mysql_cursor.fetchall()
     for result in results:
