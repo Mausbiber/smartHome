@@ -295,7 +295,7 @@ class DataScheduler{
         } else {
             $this->events[$index]['datum'] = $datum->format("d.m.Y");
         }
-        $this->events[$index]['sort'] = $datum->format("d.m.Y - H:i");
+        $this->events[$index]['sort'] = $datum->format("YYYY-mm-dd-HH-ii-ss");
 		$this->events[$index]['wochentag'] = $datum->format("w");
 		$this->events[$index]['uhrzeit'] = $datum->format("H:i");
 		$this->events[$index]['scheduler_title'] = $title;
