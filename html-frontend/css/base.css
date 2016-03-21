@@ -412,10 +412,17 @@ bootstrap button color, ....
 	margin-left: 0px;
 	margin-right: 0px;
 }
+.btn-big-margin>span {
+	margin-right: 6px;
+}
+
 @media (min-width: 768px) {
 	.btn-big-margin {
 		margin-top: 20px;
 		margin-bottom: 20px;
+	}
+	.btn-big-margin>span {
+		margin-right: 12px;
 	}
     .btn-submenu {
         width: 200px;

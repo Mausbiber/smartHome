@@ -70,8 +70,11 @@
               
                                 <!--Button: Add Data-->
                                 <div class="row">
-                                    <div class="col-xs-12 text-switch-center-left">
-                                        <a class="btn btn-primary btn-big-margin" href="update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>  <?php echo $lang['new_cycle_time']; ?></a>
+                                    <div class="col-xs-6 text-left">
+                                        <a class="btn btn-primary btn-big-margin" href="update.php" role="button"><span class='glyphicon glyphicon-plus' aria-hidden='true'></span><?php echo $lang['new_cycle_time']; ?></a>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <a class="btn btn-danger btn-big-margin" href="update_status.php?usage=timerswitch_restart&id=0" role="button"><span class='glyphicon glyphicon-refresh' aria-hidden='true'></span><?php echo $lang['restart_server']; ?></a>
                                     </div>
                                 </div>
                                 
