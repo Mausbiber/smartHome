@@ -29,36 +29,36 @@ class TimerSwitch:
         self._logging_daemon.info('TimerSwitch ... initialisiert')
 
     def load(self, scheduler_id=None):
-        sql = "SELECT " \
-              "schedulers.id AS scheduler_id, " \
-              "schedulers.title AS scheduler_title, " \
-              "schedulers.date_start_on, " \
-              "schedulers.date_start_off, " \
-              "schedulers.date_stop, " \
-              "schedulers.date_stop_on, " \
-              "schedulers.date_stop_off, " \
-              "schedulers.duration, " \
-              "schedulers.interval_number, " \
-              "schedulers.interval_unit, " \
-              "schedulers.weekly_monday, " \
-              "schedulers.weekly_tuesday, " \
-              "schedulers.weekly_wednesday, " \
-              "schedulers.weekly_thursday, " \
-              "schedulers.weekly_friday, " \
-              "schedulers.weekly_saturday, " \
-              "schedulers.weekly_sunday, " \
-              "switches.id AS switches_id, " \
-              "switches.title AS switches_title, " \
-              "switches.argA, " \
-              "switches.argB, " \
-              "switches.argC, " \
-              "switches.argD, " \
-              "switch_types.title AS switches_typ, " \
-              "clients.ip AS switches_ip " \
-              "FROM schedulers, switches, switch_types, clients " \
-              "WHERE schedulers.switches_id = switches.id " \
-              "AND switches.switch_types_id = switch_types.id " \
-              "AND switches.clients_id = clients.id"
+        sql = """SELECT
+              schedulers.id AS scheduler_id,
+              schedulers.title AS scheduler_title,
+              schedulers.date_start_on,
+              schedulers.date_start_off,
+              schedulers.date_stop,
+              schedulers.date_stop_on,
+              schedulers.date_stop_off,
+              schedulers.duration,
+              schedulers.interval_number,
+              schedulers.interval_unit,
+              schedulers.weekly_monday,
+              schedulers.weekly_tuesday,
+              schedulers.weekly_wednesday,
+              schedulers.weekly_thursday,
+              schedulers.weekly_friday,
+              schedulers.weekly_saturday,
+              schedulers.weekly_sunday,
+              switches.id AS switches_id,
+              switches.title AS switches_title,
+              switches.argA,
+              switches.argB,
+              switches.argC,
+              switches.argD,
+              switch_types.title AS switches_typ,
+              clients.ip AS switches_ip
+              FROM schedulers, switches, switch_types, clients
+              WHERE schedulers.switches_id = switches.id
+              AND switches.switch_types_id = switch_types.id
+              AND switches.clients_id = clients.id"""
         if isinstance(scheduler_id, int):
             sql += " AND schedulers.id = %s"
             self._db_connection.execute(sql, scheduler_id)
@@ -128,3 +128,11 @@ class TimerSwitch:
             scheduler_id = int(scheduler_id)
             self._db_connection.execute("DELETE FROM schedulers WHERE id = %s", scheduler_id)
             self._logging_daemon.info('Timerswitch ... Delete DB    ID = %s' % scheduler_id)
+
+    def restart(self):
+        self._logging_daemon.info('TimerSwitch ... stopping for restart')
+        self._scheduler.shutdown(0)
+        self._scheduler = AsyncIOScheduler()
+        self._scheduler.start()
+        self.load()
+        self._logging_daemon.info('TimerSwitch ... neu initialisiert')
