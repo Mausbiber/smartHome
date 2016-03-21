@@ -22,6 +22,10 @@ DEVICE_IP = [l for l in (
         [(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in
          [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
 
+if STANDALONE:
+    SERVER_IP = DEVICE_IP
+    MYSQL_HOST = DEVICE_IP
+
 consumers = []
 switches = {}
 switches_info = {}
@@ -217,6 +221,7 @@ def set_logging():
 
 if __name__ == "__main__":
     set_exit_handler(on_exit)
+
     #
     # set up Logging Deamon
     #
