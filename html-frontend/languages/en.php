@@ -35,6 +35,7 @@
 	// Zeitschaltuhr xxx
 	$lang['cycle_times'] = 'Cycle Times';
     $lang['new_cycle_time'] = 'New Cycle Time';
+    $lang['restart_server'] = 'Restart Server';
     $lang['title'] = 'Title';
     $lang['switch'] = 'Switch';
     $lang['date'] = 'Date';

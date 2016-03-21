@@ -41,7 +41,7 @@
 
     function get_lang_id()
     {
-        return ( isset( $_COOKIE['lang'] ) && strlen( $_COOKIE['lang'] ) == 2 && is_language_supported( $_COOKIE['lang'] ) ) ? htmlspecialchars($_COOKIE['lang']) : 'en';
+        return ( isset( $_COOKIE['lang'] ) && strlen( $_COOKIE['lang'] ) == 2 && is_language_supported( $_COOKIE['lang'] ) ) ? htmlspecialchars($_COOKIE['lang']) : 'de';
     }
 
     function includeTrailingCharacter($string, $character)
