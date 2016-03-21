@@ -1,5 +1,5 @@
 <?php
-    $events = $scheduler->scheduled_events_list("+7 days");
+    $events = $scheduler->scheduled_events_list("+14 days");
     if (count($events)>0) {
 ?>
 <div class="row">
@@ -54,7 +54,7 @@
 			} else {
 				echo '<p class="text-left">'.$item['uhrzeit'].' : '.$item['scheduler_title'].' - <span class="off">'.$item['status'].'</span></p>';
 			}
-			if ($zaehler>50) break;
+			if ($zaehler>99) break;
 			$zaehler++;
 		}
 							echo '</div>';
