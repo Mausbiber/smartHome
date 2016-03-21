@@ -18,6 +18,9 @@ SERVER_IP = [l for l in (
         [(s.connect(('8.8.8.8', 53)), s.getsockname()[0], s.close()) for s in
          [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
 
+if STANDALONE:
+    MYSQL_HOST = SERVER_IP
+
 consumers_clients = []
 consumers_gui = []
 
@@ -168,17 +171,17 @@ def gui_message_handler(_tmp_message):
     #    return False
 
     if message_usage == "timerswitch_new":
-        # new timerswitch entry from gui
         timer.load(int(message_id))
         return json.dumps({"usage": "timerswitch_new", "ip": "", "id": message_id, "value": True})
     elif message_usage == "timerswitch_update":
-        # changed timerswitch entry from gui
         timer.reload(message_id)
         return json.dumps({"usage": "timerswitch_update", "ip": "", "id": message_id, "value": True})
     elif message_usage == "timerswitch_delete":
-        # deleted timerswitch entry from gui
         timer.delete_job(message_id)
         return json.dumps({"usage": "timerswitch_delete", "ip": "", "id": message_id, "value": True})
+    elif message_usage == "timerswitch_restart":
+        timer.restart()
+        return json.dumps({"usage": "timerswitch_restart", "ip": "", "id": message_id, "value": True})
     else:
         return False
 
