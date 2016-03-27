@@ -36,7 +36,7 @@ class DataScheduler{
 
 	function create(){
 		$stmt = $this->conn->prepare( "SELECT switches.id FROM switches WHERE switches.title = ? " );
-		$stmt->execute((array($this->switchCommand)));
+		$stmt->execute(array(htmlentities($this->switchCommand)));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->switchesID = $row['id'];
 
@@ -383,7 +383,7 @@ class DataScheduler{
 
 	function update(){ 
 		$stmt = $this->conn->prepare( "SELECT id FROM switches WHERE title = ? " );
-		$stmt->execute(array($this->switchCommand));
+		$stmt->execute(array(htmlentities($this->switchCommand)));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->switchesID = $row['id'];
 

@@ -19,6 +19,26 @@
 		$id = -1;
 	}
 
+    if($_POST){
+        $switches->title = htmlentities(strip_tags($_POST['title']));
+        $switches->description = htmlentities(strip_tags($_POST['description']));
+        $switches->clientTitle = $_POST['client_title'];
+        $switches->switchTypTitle = $_POST['switch_type_title'];
+        $switches->argA = htmlentities(strip_tags($_POST['arg_a']));
+        $switches->argB = htmlentities(strip_tags($_POST['arg_b']));
+        $switches->argC = htmlentities(strip_tags($_POST['arg_c']));
+        $switches->argD = htmlentities(strip_tags($_POST['arg_d']));
+
+        if ($id<0) {
+            $tmp = $switches->create();
+            if($tmp) header("Location: switches.php");
+        } else {
+            $tmp = $switches->update();
+            if($tmp) header("Location: switches.php");
+        }
+    }
+
+
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -77,28 +97,6 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <?php
-                                    if($_POST){
-
-                                        $switches->title = htmlentities(strip_tags($_POST['title']));
-                                        $switches->description = htmlentities(strip_tags($_POST['description']));
-                                        $switches->clientTitle = $_POST['client_title'];
-                                        $switches->switchTypTitle = $_POST['switch_type_title'];
-                                        $switches->argA = htmlentities(strip_tags($_POST['arg_a']));
-                                        $switches->argB = htmlentities(strip_tags($_POST['arg_b']));
-                                        $switches->argC = htmlentities(strip_tags($_POST['arg_c']));
-                                        $switches->argD = htmlentities(strip_tags($_POST['arg_d']));
-
-                                        if ($id<0) {
-                                            $tmp = $switches->create();
-                                            if($tmp) header("Location: switches.php");
-                                        } else {
-                                            $tmp = $switches->update();
-                                            if($tmp) header("Location: switches.php");
-                                        }
-
-                                     }
-                                ?>
                                 <form method="post">
 
                                     <div class="row">

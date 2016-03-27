@@ -9,12 +9,27 @@
 	$db = $database->getConnection();
 	$clients = new DataClients($db);
 
-	if (isset($_GET['id'])) {
+    if (isset($_GET['id'])) {
 		$clients->id = $_GET['id'];
 		$clients->readOne();
 	} else {
 		$id = -1;
 	}
+
+    if($_POST){
+        $clients->title = htmlentities(strip_tags($_POST['title']));
+        $clients->ip = $_POST['ip'];
+        $clients->description = htmlentities(strip_tags($_POST['description']));
+
+        if ($id<0) {
+            $tmp = $clients->create();
+            if($tmp>0) header("Location: index.php");
+        } else {
+            $tmp = $clients->update();
+            if($tmp) header("Location: index.php");
+        }
+     }
+
 
 ?>
 <!DOCTYPE html>
@@ -74,23 +89,6 @@
                                     </div>
                                 </div>
                                 <hr>
-                                <?php
-                                    if($_POST){
-
-                                        $clients->title = htmlentities(strip_tags($_POST['title']));
-                                        $clients->ip = $_POST['ip'];
-                                        $clients->description = htmlentities(strip_tags($_POST['description']));
-
-                                        if ($id<0) {
-                                            $tmp = $clients->create();
-                                            if($tmp>0) header("Location: index.php");
-                                        } else {
-                                            $tmp = $clients->update();
-                                            if($tmp) header("Location: index.php");
-                                        }
-
-                                     }
-                                ?>
                                 <form method="post">
 
                                     <div class="row">

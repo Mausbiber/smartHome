@@ -146,6 +146,5 @@ class DataSwitchTypes{
    			return false;
   		}
  	}
-
 }
 ?>

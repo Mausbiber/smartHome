@@ -22,12 +22,12 @@ class DataSwitches{
 
 	function create(){
 		$stmt = $this->conn->prepare( "SELECT clients.id FROM clients WHERE clients.title = ? " );
-		$stmt->execute((array($this->clientTitle)));
+		$stmt->execute(array(htmlentities($this->clientTitle)));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->clientsID = $row['id'];
 
 		$stmt = $this->conn->prepare( "SELECT switch_types.id FROM switch_types WHERE switch_types.title = ? " );
-		$stmt->execute((array($this->switchTypTitle)));
+		$stmt->execute(array(htmlentities($this->switchTypTitle)));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->switchTypesID = $row['id'];
 
@@ -133,12 +133,12 @@ class DataSwitches{
 
 	function update(){
 		$stmt = $this->conn->prepare( "SELECT clients.id FROM clients WHERE clients.title = ? " );
-		$stmt->execute((array($this->clientTitle)));
+		$stmt->execute(array(htmlentities($this->clientTitle)));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->clientsID = $row['id'];
 
 		$stmt = $this->conn->prepare( "SELECT switch_types.id FROM switch_types WHERE switch_types.title = ? " );
-		$stmt->execute((array($this->switchTypTitle)));
+		$stmt->execute(array(htmlentities($this->switchTypTitle)));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->switchTypesID = $row['id'];
 
