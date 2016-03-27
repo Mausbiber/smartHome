@@ -432,17 +432,16 @@ class BrickletRemote:
     def set_switch(self, switch_to, arg_a, arg_b, arg_c, arg_d):
 
         self.bricklet.set_repeats(5)
-        switched = False
-        if arg_b == "b switch":
-            self.bricklet.switch_socket_b(int(arg_c), int(arg_d), switch_to)
-            switched = True
-            pass
-        elif arg_b == "c switch":
-            self.bricklet.switch_socket_c(int(arg_c), int(arg_d), switch_to)
-            switched = True
-            pass
 
-        if switched:
+        func = {
+            "b switch" : self.bricklet.switch_socket_b,
+            "a switch" : self.bricklet.switch_socket_a,
+        }.get(arg_b)
+
+        if func is not None:
+
+            func(int(arg_c), int(arg_d), switch_to)
+
             self._logging_daemon.debug(
                 'Tinkerforge ... RemoteSwitch-Bricklet UID "%s" , geschaltet %s %s %s, SOLL = %s , ' %
                 (self.uid, arg_b, arg_c, arg_d, switch_to))
