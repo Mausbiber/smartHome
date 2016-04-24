@@ -61,10 +61,10 @@ class TimerSwitch:
               AND switches.clients_id = clients.id"""
         if isinstance(scheduler_id, int):
             sql += " AND schedulers.id = %s"
-            self._db_connection.execute(sql, scheduler_id)
+            db_result = self._db_connection.query(sql, scheduler_id)
         else:
-            self._db_connection.execute(sql)
-        results = self._db_connection.fetchall()
+            db_result = self._db_connection.query(sql)
+        results = db_result.fetchall()
         for result in results:
             self._add(result)
 
@@ -115,7 +115,7 @@ class TimerSwitch:
 
     def reload(self, scheduler_id):
         self.delete_job(scheduler_id)
-        self.load(scheduler_id)
+        self.load(int(scheduler_id))
         self._logging_daemon.info('Timerswitch ... Reload       ID = %s' % scheduler_id)
 
     def delete_job(self, scheduler_id):
@@ -126,7 +126,7 @@ class TimerSwitch:
     def delete_db(self, scheduler_id):
         if isinstance(scheduler_id, int):
             scheduler_id = int(scheduler_id)
-            self._db_connection.execute("DELETE FROM schedulers WHERE id = %s", scheduler_id)
+            self._db_connection.query("DELETE FROM schedulers WHERE id = %s", scheduler_id)
             self._logging_daemon.info('Timerswitch ... Delete DB    ID = %s' % scheduler_id)
 
     def restart(self):

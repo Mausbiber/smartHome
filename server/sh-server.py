@@ -5,7 +5,7 @@ import socket
 from asyncio.queues import Queue
 import logging
 from datetime import datetime
-import pymysql
+import db
 import websockets
 import json
 from lib_timerswitch import TimerSwitch
@@ -245,14 +245,13 @@ if __name__ == '__main__':
     #
     # set up MySQL Connection
     #
-    mysql_connection = pymysql.connect(host=MYSQL_HOST, port=MYSQL_PORT, user=MYSQL_USER, passwd=MYSQL_PW,
-                                       db=MYSQL_DB, autocommit=True)
-    mysql_cursor = mysql_connection.cursor(pymysql.cursors.DictCursor)
+    datenbank = db.DB(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_DB)
+
     logger.info('mySQL ......... Verbindung online')
     #
     # set up TimerSwitch
     #
-    timer = TimerSwitch(logger, mysql_cursor, action)
+    timer = TimerSwitch(logger, datenbank, action)
     #
     # set up Websocket-Servers
     #
