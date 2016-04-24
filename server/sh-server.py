@@ -5,7 +5,7 @@ import socket
 from asyncio.queues import Queue
 import logging
 from datetime import datetime
-import db
+import database
 import websockets
 import json
 from lib_timerswitch import TimerSwitch
@@ -245,7 +245,7 @@ if __name__ == '__main__':
     #
     # set up MySQL Connection
     #
-    datenbank = db.DB(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_DB)
+    datenbank = database.DB(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_DB)
 
     logger.info('mySQL ......... Verbindung online')
     #
