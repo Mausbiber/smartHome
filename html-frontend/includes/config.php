@@ -3,8 +3,8 @@ class Config{
   
 	private $host = "localhost";
 	private $db_name = "smartHome";
-	private $username = "raspberry_pi";
-	private $password = "raspberry_pi";
+	private $username = "root";
+	private $password = "raspberry";
 	public $conn;
 	
 	public function getConnection(){

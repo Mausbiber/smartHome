@@ -16,7 +16,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>smartHome <?php echo $lang['time_switch']; ?></title>
+        <title>smartHome <?php echo $lang['settings']; ?></title>
 
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900' rel='stylesheet' type='text/css'>
     	<link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -74,7 +74,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../js/jquery-2.1.4.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/navigation-scripts.js"></script>
+		<?php include_once '../js/navigation-scripts.php'; ?>
     	<script src="../js/addons/bootstrap-clockpicker.min.js"></script>
     	<script src="../js/addons/bootstrap-datepicker.min.js"></script>
         <script src="../js/addons/ie10-viewport-bug-workaround.js"></script>
@@ -90,10 +90,19 @@
             if (isNaN($_GET.id) == true ) {
                 window.setTimeout(function(){window.location = "index.php"},500);
             }
+			
+			
+/*  TODO hardcoded Server IP */
+			var socketServer = new WebSocket('ws://10.0.0.61:5505');
+			
+			window.setTimeout(function(){
+				if(socketServer.readyState === 0  || socketServer.readyState === 3){
+					$("#connect1_span").replaceWith('<span class="off"> Keine Verbindung zum Server</span>');
+					window.location = "index.php";
+				}
+			},1000);
 
-            var socketServer = new WebSocket('ws://192.168.127.20:5505');
-
-            socketServer.onerror = function(error) {
+           socketServer.onerror = function(error) {
                 window.setTimeout(function(){$("#connect1_span").replaceWith('<span class="off"> Offline</span>');},500);
                 window.setTimeout(function(){window.location = "index.php"},1000);
             };

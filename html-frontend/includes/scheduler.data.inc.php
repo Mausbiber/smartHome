@@ -1,4 +1,5 @@
 <?php
+
 class DataScheduler{
 
 	private $conn;
@@ -26,8 +27,8 @@ class DataScheduler{
 	public $weeklyFriday;
 	public $weeklySaturday;
 	public $weeklySunday;
-	
 	public $events;
+	public $show_seconds;
 	
 	public function __construct($db){
 		$this->conn = $db;
@@ -171,7 +172,8 @@ class DataScheduler{
 	}
 
 
-	function scheduled_events_list($vorschau){
+	function scheduled_events_list($vorschau, $show_seconds){
+		// echo "____scheduled event list {</br>"; 
 		$query = "SELECT 
 			schedulers.title AS scheduler_title, 
 			schedulers.switches_id,
@@ -202,22 +204,26 @@ class DataScheduler{
 		$datum_vorschau = new DateTime();
 		$datum_vorschau->modify($vorschau);
 		
+		
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)){
+			// echo "____switch (\"".$row['duration']."\") { "; 
 			switch ($row['duration']) {
 				
 				case "einmalig":
+					// echo "case \"einmalig\":</br>"; 
 					$datum_scheduler = new DateTime($row['date_start_on']);
 					if (($datum_scheduler >= $datum_now) and ($datum_scheduler <= $datum_vorschau)) {
-						$this->scheduled_events_enter($index, $datum_scheduler, $row['scheduler_title'], $row['icon'], "on");
+						$this->scheduled_events_enter($index, $datum_scheduler, $row['scheduler_title'], $row['icon'], "on", $show_seconds);
 					}
 					$datum_scheduler = new DateTime($row['date_start_off']);
 					if (($datum_scheduler >= $datum_now) and ($datum_scheduler <= $datum_vorschau)){
-						$this->scheduled_events_enter($index, $datum_scheduler, $row['scheduler_title'], $row['icon'], "off");
+						$this->scheduled_events_enter($index, $datum_scheduler, $row['scheduler_title'], $row['icon'], "off", $show_seconds);
 					}
 					break;
 					
 				case "intervall":
-					$aUnits =  array('Minuten' => 'minutes', 'Stunden' => 'hours', 'Tage' => 'days', 'Wochen' => 'weeks');	
+					// echo "case \"intervall\":</br>"; 
+					$aUnits =  array('Sekunden' => 'seconds', 'Minuten' => 'minutes', 'Stunden' => 'hours', 'Tage' => 'days', 'Wochen' => 'weeks');	
 					$time_to_add = '+ ' . $row['interval_number'] . ' ' . $aUnits[$row['interval_unit']];  
 					
 					$datum_scheduler = new DateTime($row['date_start_on']);
@@ -227,7 +233,7 @@ class DataScheduler{
 					}
 					while ($datum_scheduler <= $datum_vorschau) {
 						if ((($row['date_stop']) and ($datum_scheduler <= $datum_scheduler_stop)) or ($row['date_stop']<>true)){
-							$this->scheduled_events_enter($index, $datum_scheduler, $row['scheduler_title'], $row['icon'], "on");
+							$this->scheduled_events_enter($index, $datum_scheduler, $row['scheduler_title'], $row['icon'], "on", $show_seconds);
 						}
 						$datum_scheduler->modify($time_to_add);
 					}
@@ -239,25 +245,27 @@ class DataScheduler{
 					}
 					while ($datum_scheduler <= $datum_vorschau) {
 						if ((($row['date_stop']) and ($datum_scheduler <= $datum_scheduler_stop)) or ($row['date_stop']<>true)){
-							$this->scheduled_events_enter ($index, $datum_scheduler, $row['scheduler_title'], $row['icon'], "off");
+							$this->scheduled_events_enter ($index, $datum_scheduler, $row['scheduler_title'], $row['icon'], "off", $show_seconds);
 						}
 						$datum_scheduler->modify($time_to_add);
 					}
 					break;
 					
 				case "wochentag":
+					// echo "case \"wochentag\":</br>"; 
 					$datum_scheduler = new DateTime($row['date_start_on']);
 					$wochentag_start = $datum_scheduler->format('w');
 					$aWeekdays = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday');  
 					foreach($aWeekdays as $weekday) {
 						if ($row['weekly_'.$weekday]) {
-							$this->scheduled_events_weekdays($datum_now, $datum_vorschau, $index, $row['date_start_on'],$row['date_stop_on'],$row['date_stop'],$this->calcDaysDiff($datum_scheduler, $weekday),$row['scheduler_title'], $row['icon'], "on");
-							$this->scheduled_events_weekdays($datum_now, $datum_vorschau, $index, $row['date_start_off'],$row['date_stop_off'],$row['date_stop'],$this->calcDaysDiff($datum_scheduler, $weekday),$row['scheduler_title'], $row['icon'], "off");
+							$this->scheduled_events_weekdays($datum_now, $datum_vorschau, $index, $row['date_start_on'],$row['date_stop_on'],$row['date_stop'],$this->calcDaysDiff($datum_scheduler, $weekday),$row['scheduler_title'], $row['icon'], "on", $show_seconds);
+							$this->scheduled_events_weekdays($datum_now, $datum_vorschau, $index, $row['date_start_off'],$row['date_stop_off'],$row['date_stop'],$this->calcDaysDiff($datum_scheduler, $weekday),$row['scheduler_title'], $row['icon'], "off", $show_seconds);
 						}
 					}  
 					break;
 
 			}
+			// echo "____} switch (".$row['duration'].")</br>"; 
 		}
 	
 		foreach ($this->events as $nr => $inhalt)
@@ -268,11 +276,12 @@ class DataScheduler{
 		array_multisort($datum, SORT_ASC, $this->events);
 		
 		return $this->events;
-		
+		// echo "____} scheduled_events_list</br>"; 
 	}
 
 
-	function scheduled_events_weekdays($now, $vorschau, &$index, $date_on, $date_off, $stop, $days, $title, $icon, $status) {
+	function scheduled_events_weekdays($now, $vorschau, &$index, $date_on, $date_off, $stop, $days, $title, $icon, $status, $show_seconds) {
+		// echo "______scheduled_events_weekdays {</br>"; 
 		$datum_scheduler = new DateTime($date_on);
 		$datum_scheduler_stop = new DateTime($date_off);
 		$datum_scheduler->modify("+".$days." days");
@@ -281,14 +290,17 @@ class DataScheduler{
 		}
 		while ($datum_scheduler <= $vorschau) {
 			if ((($stop) and ($datum_scheduler <= $datum_scheduler_stop)) or ($stop<>true)){
-				$this->scheduled_events_enter($index, $datum_scheduler, $title, $icon, $status);
+				$this->scheduled_events_enter($index, $datum_scheduler, $title, $icon, $status, $show_seconds);
 			}
 			$datum_scheduler->modify("+7 days");
 		}
+		// echo "______} scheduled_events_weekdays</br>"; 
 	}
 	
 	
-	function scheduled_events_enter(&$index, $datum, $title, $icon, $status) {
+	function scheduled_events_enter(&$index, $datum, $title, $icon, $status, $show_seconds) {
+		// echo "________scheduled_events_enter {</br>"; 
+
 		$index++;
         if (get_lang_id()=="en") {
             $this->events[$index]['datum'] = $datum->format("m-d-Y");
@@ -297,9 +309,15 @@ class DataScheduler{
         }
         $this->events[$index]['sort'] = $datum->format("YYYY-mm-dd-HH-ii-ss");
 		$this->events[$index]['wochentag'] = $datum->format("w");
-		$this->events[$index]['uhrzeit'] = $datum->format("H:i");
+		//$this->events[$index]['uhrzeit'] = $datum->format("H:i:s");
+		if($show_seconds == 1){
+			$this->events[$index]['uhrzeit'] = $datum->format("H:i:s");
+		} else {
+			$this->events[$index]['uhrzeit'] = $datum->format("H:i");
+		};
 		$this->events[$index]['scheduler_title'] = $title;
 		$this->events[$index]['status'] = $status;
+		// echo "________} scheduled_events_enter</br>"; 
 	}
 
 

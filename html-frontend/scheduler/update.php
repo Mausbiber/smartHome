@@ -4,11 +4,15 @@
 	include_once '../includes/config.php';
 	include_once '../includes/scheduler.data.inc.php';
     include_once("../languages/lang.php");
+	include_once '../includes/settings.data.inc.php';
 	 
 	$database = new Config();
 	$db = $database->getConnection();
 	$scheduler = new DataScheduler($db);
 	$switches = $scheduler->readSwitches();
+	$settings = new DataSettings($db);
+	$data_settings = $settings->readAll();
+	$show_seconds = $data_settings['show_seconds'];
 
 	if (isset($_GET['id'])) {
 		$scheduler->id = $_GET['id'];
@@ -166,7 +170,7 @@
                                                 </div>
                                                 <div class="col-xs-6 col-sm-3 col-md-4 col-lg-3 no_padding text-left">
                                                     <div class="input-group clockpicker">
-                                                        <input type="text" class="form-control" id="str_time_start" name="str_time_start" placeholder="08:00" value='<?php echo $scheduler->strTimeStart; ?>' required readonly><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                        <input type="text" class="form-control" id="str_time_start" name="str_time_start" placeholder="08:00" value='<?php echo $scheduler->strTimeStart; ?>' required><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                                     </div>
                                                 </div>
                                                 <div class="clearfix visible-xs-block"></div>
@@ -175,7 +179,7 @@
                                                 </div>
                                                 <div class="col-xs-6 col-sm-4 col-lg-3 no_padding text-left">
                                                     <div class="input-group clockpicker">
-                                                        <input type="text" class="form-control" id="str_time_stop" name="str_time_stop" placeholder="18:00" value='<?php echo $scheduler->strTimeStop; ?>' required readonly><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                                        <input type="text" class="form-control" id="str_time_stop" name="str_time_stop" placeholder="18:00" value='<?php echo $scheduler->strTimeStop; ?>' required><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -240,7 +244,10 @@
                                                         </div>
                                                         <div class="col-xs-4 col-sm-3 no_padding">
                                                             <select class="form-control" name="interval_unit" id="interval_unit" value='<?php echo $scheduler->intervalUnit; ?>'>
-                                                              <option <?php if ($scheduler->intervalUnit=='Minuten') echo "selected"?>><?php echo $lang['minutes']; ?></option>
+															<?php if($show_seconds == 1){ ?>
+															  <option <?php if ($scheduler->intervalUnit=='Sekunden') echo "selected"?>><?php echo $lang['seconds']; ?></option>
+                                                            <?php } ?>
+															<option <?php if ($scheduler->intervalUnit=='Minuten') echo "selected"?>><?php echo $lang['minutes']; ?></option>
                                                               <option <?php if ($scheduler->intervalUnit=='Stunden') echo "selected"?>><?php echo $lang['hours']; ?></option>
                                                               <option <?php if ($scheduler->intervalUnit=='Tage') echo "selected"?>><?php echo $lang['days']; ?></option>
                                                               <option <?php if ($scheduler->intervalUnit=='Wochen') echo "selected"?>><?php echo $lang['weeks']; ?>n</option>
@@ -316,7 +323,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../js/jquery-2.1.4.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/navigation-scripts.js"></script>
+        <?php include_once '../js/navigation-scripts.php'; ?>
     	<script src="../js/addons/bootstrap-clockpicker.min.js"></script>
     	<script src="../js/addons/bootstrap-datepicker.min.js"></script>
         <script src="../js/addons/ie10-viewport-bug-workaround.js"></script>

@@ -2,43 +2,48 @@
 	date_default_timezone_set('Europe/Berlin');
 
 	include_once '../includes/config.php';
-	include_once '../includes/switches.data.inc.php';
+	include_once '../includes/sensors.data.inc.php';
 	include_once '../includes/clients.data.inc.php';
+	include_once '../includes/settings.data.inc.php';	
     include_once '../languages/lang.php';
 
 	$database = new Config();
 	$db = $database->getConnection();
-	$switches = new DataSwitches($db);
-    $list_of_clients = $switches->readClients();
-    $list_of_switch_types = $switches->readTypes();
+	$sensors = new DataSensors($db);
+    $list_of_clients = $sensors->readClients();
+    $list_of_sensor_types = $sensors->readTypes();
 
+	$settings = new DataSettings($db);
+    $data_settings = $settings->readAll();
+	$show_seconds = $data_settings['show_seconds'];
+	
 	if (isset($_GET['id'])) {
-		$switches->id = $_GET['id'];
-		$switches->readOne();
+		$sensors->id = $_GET['id'];
+		$sensors->readOne();
 	} else {
 		$id = -1;
 	}
 
     if($_POST){
-        $switches->title = htmlentities(strip_tags($_POST['title']));
-        $switches->description = htmlentities(strip_tags($_POST['description']));
-        $switches->clientTitle = $_POST['client_title'];
-        $switches->switchTypTitle = $_POST['switch_type_title'];
-        $switches->argA = htmlentities(strip_tags($_POST['arg_a']));
-        $switches->argB = htmlentities(strip_tags($_POST['arg_b']));
-        $switches->argC = htmlentities(strip_tags($_POST['arg_c']));
-        $switches->argD = htmlentities(strip_tags($_POST['arg_d']));
-        $switches->status = 0;
+        $sensors->title = htmlentities(strip_tags($_POST['title']));
+        $sensors->description = htmlentities(strip_tags($_POST['description']));
+        $sensors->clientTitle = $_POST['client_title'];
+        $sensors->sensorTypTitle = $_POST['sensor_type_title'];
+        $sensors->argA = htmlentities(strip_tags($_POST['arg_a']));
+        $sensors->argB = htmlentities(strip_tags($_POST['arg_b']));
+        $sensors->argC = htmlentities(strip_tags($_POST['arg_c']));
+        $sensors->argD = htmlentities(strip_tags($_POST['arg_d']));
 
         if ($id<0) {
-            $tmp = $switches->create();
-            if($tmp) header("Location: switches.php");
+            $tmp = $sensors->create();
+            if($tmp) header("Location: sensors.php");
         } else {
-            $tmp = $switches->update();
-            if($tmp) header("Location: switches.php");
+            $tmp = $sensors->update();
+            if($tmp) header("Location: sensors.php");
         }
     }
 
+	
 
 ?>
 <!DOCTYPE html>
@@ -69,7 +74,7 @@
 
 		<!--Pseudo-Navigationsleiste mit Menu-Button und Anzeige des aktuellen Menu's-->
         <?php
-            $site_name = $lang['settings']." - ".$lang['switches'];
+            $site_name = $lang['settings']." - ".$lang['sensors'];
             include_once '../includes/navbar-top.php';
         ?>
 
@@ -90,9 +95,9 @@
                                     <div class="col-xs-12">
                                         <?php
                                             if ($id<0) {
-                                                echo "<h2>".$lang['create_switch']."</h2>";
+                                                echo "<h2>".$lang['create_sensor']."</h2>";
                                             } else {
-                                                echo "<h2>".$lang['modify_switch']."</h2>";
+                                                echo "<h2>".$lang['modify_sensor']."</h2>";
                                             }
                                         ?>
                                     </div>
@@ -105,7 +110,7 @@
                                             <label for="title" class="control-label"><?php echo $lang['title']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-4 col-md-5 no_padding text-left">
-                                            <input type="text" class="form-control" name="title" id="title" placeholder="" value='<?php echo $switches->title; ?>' required>
+                                            <input type="text" class="form-control" name="title" id="title" placeholder="" value='<?php echo $sensors->title; ?>' required>
                                         </div>
                                     </div>
 
@@ -118,7 +123,7 @@
                                                 <?php
                                                     while ($tmp_row = $list_of_clients->fetch(PDO::FETCH_ASSOC)){
                                                         $tmp_title = $tmp_row['title'];
-                                                        if($tmp_title == $switches->clientTitle) {
+                                                        if($tmp_title == $sensors->clientTitle) {
                                                             echo "<option selected>".$tmp_title."</option>";
                                                         } else {
                                                             echo "<option>".$tmp_title."</option>";
@@ -131,14 +136,14 @@
 
                                     <div class="row">
                                         <div class="col-xs-5 col-sm-4 col-sm-offset-1 col-lg-3 text-right">
-                                            <label for="switch_type_title" class="control-label"><?php echo $lang['switching_device']; ?></label>
+                                            <label for="sensor_type_title" class="control-label"><?php echo $lang['sensor_device']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-2 col-md-3 no_padding text-left">
-                                            <select class="form-control" name="switch_type_title" id="switch_type_title">
+                                            <select class="form-control" name="sensor_type_title" id="sensor_type_title">
                                                 <?php
-                                                    while ($tmp_row = $list_of_switch_types->fetch(PDO::FETCH_ASSOC)){
+                                                    while ($tmp_row = $list_of_sensor_types->fetch(PDO::FETCH_ASSOC)){
                                                         $tmp_title = $tmp_row['title'];
-                                                        if($tmp_title == $switches->switchTypTitle) {
+                                                        if($tmp_title == $sensors->sensorTypTitle) {
                                                             echo "<option selected>".$tmp_title."</option>";
                                                         } else {
                                                             echo "<option>".$tmp_title."</option>";
@@ -156,16 +161,16 @@
                                         <div class="col-xs-5 col-sm-4 col-md-7">
                                             <div class="row">
                                                 <div class="col-md-5 no_padding text-left">
-                                                    <input type="text" class="form-control argument" name="arg_a" id="arg_a" placeholder="Arg A" value='<?php echo $switches->argA; ?>'>
+                                                    <input type="text" class="form-control argument" name="arg_a" id="arg_a" placeholder="Arg A" value='<?php echo $sensors->argA; ?>'>
                                                 </div>
                                                 <div class="col-md-offset-1 col-md-5 no_padding text-left">
-                                                    <input type="text" class="form-control argument" name="arg_b" id="arg_b" placeholder="Arg B" value='<?php echo $switches->argB; ?>'>
+                                                    <input type="text" class="form-control argument" name="arg_b" id="arg_b" placeholder="Arg B" value='<?php echo $sensors->argB; ?>'>
                                                 </div>
                                                 <div class="col-md-5 no_padding text-left">
-                                                    <input type="text" class="form-control argument" name="arg_c" id="arg_c" placeholder="Arg C" value='<?php echo $switches->argC; ?>'>
+                                                    <input type="text" class="form-control argument" name="arg_c" id="arg_c" placeholder="Arg C" value='<?php echo $sensors->argC; ?>'>
                                                 </div>
                                                 <div class="col-md-offset-1 col-md-5 no_padding text-left">
-                                                    <input type="text" class="form-control argument" name="arg_d" id="arg_d" placeholder="Arg D" value='<?php echo $switches->argD; ?>'>
+                                                    <input type="text" class="form-control argument" name="arg_d" id="arg_d" placeholder="Arg D" value='<?php echo $sensors->argD; ?>'>
                                                 </div>
                                             </div>
                                         </div>
@@ -176,7 +181,7 @@
                                             <label for="description" class="control-label"><?php echo $lang['description']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-4 col-md-5 no_padding text-left">
-                                            <textarea style="width:100%" name="description" id="description" class="form-control" rows="3" placeholder=""><?php echo $switches->description; ?></textarea>
+                                            <textarea style="width:100%" name="description" id="description" class="form-control" rows="3" placeholder=""><?php echo $sensors->description; ?></textarea>
                                         </div>
                                     </div>
 
@@ -186,7 +191,7 @@
                                             <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  <?php echo $lang['save']; ?></button>
                                         </div>
                                         <div class="col-xs-12 col-sm-6 text-switch-center-left no_padding">
-                                            <a class="btn btn-default btn-fix-width" href="switches.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  <?php echo $lang['cancle']; ?></a>
+                                            <a class="btn btn-default btn-fix-width" href="sensors.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  <?php echo $lang['cancle']; ?></a>
                                         </div>
                                     </div>
 

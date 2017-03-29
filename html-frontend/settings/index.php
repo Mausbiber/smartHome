@@ -19,6 +19,7 @@
 
     $settings = new DataSettings($db);
     $data_settings = $settings->readAll();
+	$show_seconds = $data_settings['show_seconds'];
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -30,7 +31,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>smartHome Settings</title>
+        <title>smartHome <?php echo $lang['settings']; ?></title>
 
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500,700,900' rel='stylesheet' type='text/css'>
     	<link href="../css/bootstrap.css" rel="stylesheet" type="text/css">
@@ -155,11 +156,13 @@
                                          $settings->scheduler_settings_page_per_view = $_POST['scheduler_settings_page_per_view'];
                                         $settings->scheduler_preview_period = $_POST['scheduler_preview_period'];
                                         $settings->scheduler_preview_items = $_POST['scheduler_preview_items'];
+										$settings->show_seconds = $_POST['show_seconds'];
 
                                         if ($settings->update()) {
                                             $data_settings['scheduler_settings_page_per_view'] = $settings->scheduler_settings_page_per_view;
                                             $data_settings['scheduler_preview_period'] = $settings->scheduler_preview_period;
                                             $data_settings['scheduler_preview_items'] = $settings->scheduler_preview_items;
+											$data_settings['show_seconds'] = $settings->show_seconds;
                                         }
                                      }
                                 ?>
@@ -195,6 +198,18 @@
                                                             <div class="col-xs-2 no_padding text-left">
                                                                 <input type="number" class="form-control fix-width-number" name="scheduler_preview_items" id="scheduler_preview_items" value='<?php echo $data_settings['scheduler_preview_items']; ?>' required>
                                                             </div>
+															
+                                                        </div>
+														<!--show seconds (many TODO)-->
+														<div class="row">
+                                                            <div class="col-xs-8 text-left">
+                                                                <label for="show_seconds" class="control-label small"><?php echo $lang['show_seconds']; ?></label>
+                                                            </div>
+                                                            <div class="col-xs-2 no_padding text-left">
+                                                                <!--<input type="checkbox" class="form-control fix-width-number" name="show_seconds" id="show_seconds" value='<?php echo $data_settings['show_seconds']; ?>'> -->
+																<input type="checkbox" class="form-control fix-width-number" name="show_seconds" id="show_seconds" value= "1" <?php echo ($data_settings['show_seconds']==1) ? 'checked' : '' ; ?>>
+                                                            </div>
+															
                                                         </div>
                                                     </fieldset>
                                                 </div>
@@ -220,7 +235,7 @@
 
         <script src="../js/jquery-2.1.4.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/navigation-scripts.js"></script>
+        <?php include_once '../js/navigation-scripts.php'; ?>
         <script src="../js/addons/ie10-viewport-bug-workaround.js"></script>
         <script>
         </script>

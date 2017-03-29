@@ -5,11 +5,15 @@ import socket
 from asyncio.queues import Queue
 import logging
 from datetime import datetime
+import sys
+#import os
+sys.path.append("/smartHome/libs")
 import database
+import lib_timerswitch
 import websockets
 import json
 from lib_timerswitch import TimerSwitch
-import sys
+#import sys
 import signal
 from config import *
 
@@ -19,7 +23,8 @@ SERVER_IP = [l for l in (
          [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) if l][0][0]
 
 if STANDALONE:
-    MYSQL_HOST = SERVER_IP
+#    MYSQL_HOST = SERVER_IP
+     MYSQL_HOST = '127.0.0.1'
 
 consumers_clients = []
 consumers_gui = []
@@ -59,7 +64,7 @@ def sending_loop_clients(websocket):
 
     try:
         consumers_clients.append(changed)
-        logger.info('websockets .... ein neuer smartHome-Client wurde in die Queue aufgenommen')
+        logger.info('websockets .... ein neuer smartHome-Client wurde in die Queue aufgenommen: %s ' % changed)
 
         while True:
             tmp_data = yield from sending_queue_sensors.get()
@@ -68,7 +73,7 @@ def sending_loop_clients(websocket):
 
     finally:
         consumers_clients.remove(changed)
-        logger.info('websockets .... ein smartHome-Client wurde aus der Queue entfernt')
+        logger.info('websockets .... ein smartHome-Client wurde aus der Queue entfernt: %s ' % changed)
 
 
 @asyncio.coroutine
@@ -247,7 +252,7 @@ if __name__ == '__main__':
     #
     datenbank = database.DB(MYSQL_HOST, MYSQL_PORT, MYSQL_USER, MYSQL_PW, MYSQL_DB)
 
-    logger.info('mySQL ......... Verbindung online')
+    logger.info('mySQL ......... (%s:%s, DB:%s) Verbindung online' % (MYSQL_HOST, MYSQL_PORT, MYSQL_DB))
     #
     # set up TimerSwitch
     #

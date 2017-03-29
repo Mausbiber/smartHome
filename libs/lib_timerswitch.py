@@ -53,6 +53,7 @@ class TimerSwitch:
               switches.argB,
               switches.argC,
               switches.argD,
+              switches.status,
               switch_types.title AS switches_typ,
               clients.ip AS switches_ip
               FROM schedulers, switches, switch_types, clients
