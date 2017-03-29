@@ -1,7 +1,7 @@
 #!/bin/sh
 # chkconfig: 123456 90 10
 #
-workdir=/smartHome/client
+workdir=/smartHome/clients
 
 start() {
     cd ${workdir}

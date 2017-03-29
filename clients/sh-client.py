@@ -4,17 +4,22 @@ import asyncio
 from asyncio.queues import Queue
 import logging
 import sys
+import websockets
+import pymysql
+import datetime
 import signal
 import json
 import socket
+sys.path.append("/smartHome/libs")
 from tinkerforge.ip_connection import IPConnection
 from lib_tinkerforge import BrickletQuadRelay, BrickletRemote, BrickletDualRelay
 import lib_sispm
 import lib_simpliboxio
-# import lib_gpio
+import lib_gpio
+import lib_i2c
 
-import pymysql
-import websockets
+#import pymysql
+#import websockets
 from config import *
 
 DEVICE_IP = [l for l in (
@@ -24,7 +29,7 @@ DEVICE_IP = [l for l in (
 
 if STANDALONE:
     SERVER_IP = DEVICE_IP
-    MYSQL_HOST = DEVICE_IP
+    MYSQL_HOST = '127.0.0.1'
 
 consumers = []
 switches = {}
@@ -84,6 +89,7 @@ def client_handler():
 
         # leave if client is disconnect
         if message_received is None:
+            logger.debug('Ben Client Handler Break....')
             break
 
         # switch to different tasks
@@ -104,7 +110,15 @@ def message_handler(_tmp_message):
     message_ip = message["ip"]
     message_id = message["id"]
     message_value = message["value"]
-
+    
+    logger.debug('message_handler .... debug Ben -> %s, %s, %s, %s' % (message_usage, message_ip, message_id, message_value))
+     
+    sql = """UPDATE switches
+        SET status = %s
+        WHERE id = %s
+        """
+    mysql_cursor.execute(sql, (message_value, str(message_id)))
+    
     if message_ip == DEVICE_IP:
         if message_usage == "switch_turn":
             switches[switches_info[message_id, "index"]].set_switch(message_value, switches_info[message_id, "argA"],
@@ -196,6 +210,14 @@ def get_switches():
         elif result['switches_typ'] == "raspi_gpio":
             switches_info[result['switches_id'], "index"] = "raspi_gpio"
             switches[switches_info[result['switches_id'], "index"]] = lib_gpio.RaspiGPIO(result['switches_id'],
+                                                                                         DEVICE_IP, logger, consumers)
+
+        #
+        # set up raspi i2c Bus
+        #
+        elif result['switches_typ'] == "raspi_i2c":
+            switches_info[result['switches_id'], "index"] = "raspi_i2c"
+            switches[switches_info[result['switches_id'], "index"]] = lib_i2c.RaspiI2C(result['switches_id'],
                                                                                          DEVICE_IP, logger, consumers)
 
     if tinkerforge:

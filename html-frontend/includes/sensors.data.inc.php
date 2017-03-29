@@ -1,5 +1,5 @@
 <?php
-class DataSwitches{
+class DataSensors{
 
 	private $conn;
 
@@ -8,13 +8,12 @@ class DataSwitches{
 	public $description;
 	public $clientsID;
 	public $clientTitle;
-	public $switchTypesID;
-	public $switchTypTitle;
+	public $sensorTypesID;
+	public $sensorTypTitle;
 	public $argA;
 	public $argB;
 	public $argC;
 	public $argD;
-    public $status;
 
 	public function __construct($db){
 		$this->conn = $db;
@@ -27,12 +26,12 @@ class DataSwitches{
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->clientsID = $row['id'];
 
-		$stmt = $this->conn->prepare( "SELECT switch_types.id FROM switch_types WHERE switch_types.title = ? " );
-		$stmt->execute(array(htmlentities($this->switchTypTitle)));
+		$stmt = $this->conn->prepare( "SELECT sensor_types.id FROM sensor_types WHERE sensor_types.title = ? " );
+		$stmt->execute(array(htmlentities($this->sensorTypTitle)));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-		$this->switchTypesID = $row['id'];
+		$this->sensorTypesID = $row['id'];
 
-		$query = "INSERT INTO switches values('',?,?,?,?,?,?,?,?,?)";
+		$query = "INSERT INTO sensors values('',?,?,?,?,?,?,?,?)";
 		$stmt = $this->conn->prepare($query);
 
 		$this->title = filter_var($this->title);
@@ -41,17 +40,15 @@ class DataSwitches{
 		$this->argB = filter_var($this->argB);
 		$this->argC = filter_var($this->argC);
 		$this->argD = filter_var($this->argD);
-		$this->status = filter_var($this->status);
 
 		if ($stmt->execute(array($this->title,
 								 $this->description,
 								 $this->clientsID,
-								 $this->switchTypesID,
+								 $this->sensorTypesID,
 								 $this->argA,
 								 $this->argB,
 								 $this->argC,
-								 $this->argD,
-								 $this->status))) {
+								 $this->argD))) {
 
 			return true;
 
@@ -61,41 +58,38 @@ class DataSwitches{
 		}
 
 	}
-
+    
 	function read(){
 		$query = "SELECT
-			switches.id AS switches_id,
-			switches.title AS switches_title,
-			switches.description AS switches_description,
-            switches.argA as switches_arg_a,
-            switches.argB as switches_arg_b,
-            switches.argC as switches_arg_c,
-            switches.argD as switches_arg_d,
-            switches.status as switches_status,
-            switch_types.title as switch_types_title,
+			sensors.id AS sensors_id,
+			sensors.title AS sensors_title,
+			sensors.description AS sensors_description,
+            sensors.argA as sensors_arg_a,
+            sensors.argB as sensors_arg_b,
+            sensors.argC as sensors_arg_c,
+            sensors.argD as sensors_arg_d,
+            sensor_types.title as sensor_types_title,
             clients.title as clients_title
-			FROM switches , clients, switch_types
-            WHERE switches.clients_id = clients.id AND switches.switch_types_id = switch_types.id";
+			FROM sensors , clients, sensor_types
+            WHERE sensors.clients_id = clients.id AND sensors.sensor_types_id = sensor_types.id";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
 		return $stmt;
 	}
 
-
-	function readAll($page_switches, $frn, $rpp){
+	function readAll($page_sensors, $frn, $rpp){
 		$query = "SELECT
-			switches.id AS switches_id,
-			switches.title AS switches_title,
-			switches.description AS switches_description,
-            switches.argA as switches_arg_a,
-            switches.argB as switches_arg_b,
-            switches.argC as switches_arg_c,
-            switches.argD as switches_arg_d,
-            switches.status as switches_status,
-            switch_types.title as switch_types_title,
+			sensors.id AS sensors_id,
+			sensors.title AS sensors_title,
+			sensors.description AS sensors_description,
+            sensors.argA as sensors_arg_a,
+            sensors.argB as sensors_arg_b,
+            sensors.argC as sensors_arg_c,
+            sensors.argD as sensors_arg_d,
+            sensor_types.title as sensor_types_title,
             clients.title as clients_title
-			FROM switches , clients, switch_types
-            WHERE switches.clients_id = clients.id AND switches.switch_types_id = switch_types.id
+			FROM sensors , clients, sensor_types
+            WHERE sensors.clients_id = clients.id AND sensors.sensor_types_id = sensor_types.id
 			LIMIT {$frn}, {$rpp}"; //TODO: Bobby Table
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute();
@@ -111,14 +105,14 @@ class DataSwitches{
 
 
     function readTypes(){
-		$stmt = $this->conn->prepare( "SELECT id, title FROM switch_types ORDER BY title ASC" );
+		$stmt = $this->conn->prepare( "SELECT id, title FROM sensor_types ORDER BY title ASC" );
 		$stmt->execute();
 		return $stmt;
 	}
 
 
 	public function countAll(){
-		$stmt = $this->conn->prepare( "SELECT id FROM switches" );
+		$stmt = $this->conn->prepare( "SELECT id FROM sensors" );
 		$stmt->execute();
 		$num = $stmt->rowCount();
 		return $num;
@@ -127,32 +121,30 @@ class DataSwitches{
 
 	function readOne(){
 		$query = "SELECT
-            switches.id AS switches_id,
-			switches.title AS switches_title,
-			switches.description AS switches_description,
-            switches.argA as switches_arg_a,
-            switches.argB as switches_arg_b,
-            switches.argC as switches_arg_c,
-            switches.argD as switches_arg_d,
-            switches.status as switches_status,
-            switch_types.title as switch_types_title,
+            sensors.id AS sensors_id,
+			sensors.title AS sensors_title,
+			sensors.description AS sensors_description,
+            sensors.argA as sensors_arg_a,
+            sensors.argB as sensors_arg_b,
+            sensors.argC as sensors_arg_c,
+            sensors.argD as sensors_arg_d,
+            sensor_types.title as sensor_types_title,
             clients.title as clients_title
-			FROM switches , clients, switch_types
-            WHERE switches.clients_id = clients.id AND switches.switch_types_id = switch_types.id AND switches.id = ?
+			FROM sensors , clients, sensor_types
+            WHERE sensors.clients_id = clients.id AND sensors.sensor_types_id = sensor_types.id AND sensors.id = ?
 			LIMIT 0,1";
 		$stmt = $this->conn->prepare( $query );
 		$stmt->execute(array($this->id));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-		$this->title = $row['switches_title'];
-		$this->description = $row['switches_description'];
+		$this->title = $row['sensors_title'];
+		$this->description = $row['sensors_description'];
 		$this->clientTitle = $row['clients_title'];
-		$this->switchTypTitle = $row['switch_types_title'];
-		$this->argA = $row['switches_arg_a'];
-		$this->argB = $row['switches_arg_b'];
-		$this->argC = $row['switches_arg_c'];
-		$this->argD = $row['switches_arg_d'];
-        $this->status = $row['switches_status'];
+		$this->sensorTypTitle = $row['sensor_types_title'];
+		$this->argA = $row['sensors_arg_a'];
+		$this->argB = $row['sensors_arg_b'];
+		$this->argC = $row['sensors_arg_c'];
+		$this->argD = $row['sensors_arg_d'];
 	}
 
 
@@ -162,21 +154,20 @@ class DataSwitches{
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 		$this->clientsID = $row['id'];
 
-		$stmt = $this->conn->prepare( "SELECT switch_types.id FROM switch_types WHERE switch_types.title = ? " );
-		$stmt->execute(array(htmlentities($this->switchTypTitle)));
+		$stmt = $this->conn->prepare( "SELECT sensor_types.id FROM sensor_types WHERE sensor_types.title = ? " );
+		$stmt->execute(array(htmlentities($this->sensorTypTitle)));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
-		$this->switchTypesID = $row['id'];
+		$this->sensorTypesID = $row['id'];
 
-        $query = "UPDATE switches SET
+        $query = "UPDATE sensors SET
             title = :title,
             description = :description,
             clients_id = :clients_id,
-            switch_types_id = :switch_types_id,
+            sensor_types_id = :sensor_types_id,
             argA = :argA,
             argB = :argB,
             argC = :argC,
-            argD = :argD,
-            status = :status
+            argD = :argD
            WHERE id = :id";
 		$stmt = $this->conn->prepare($query);
 
@@ -186,17 +177,15 @@ class DataSwitches{
 		$this->argB = filter_var($this->argB);
 		$this->argC = filter_var($this->argC);
 		$this->argD = filter_var($this->argD);
-		$this->status = filter_var($this->status);
 
 		if($stmt->execute(array('title' => $this->title,
                                 'description' => $this->description,
                                 'clients_id' => $this->clientsID,
-                                'switch_types_id' => $this->switchTypesID,
+                                'sensor_types_id' => $this->sensorTypesID,
                                 'argA' => $this->argA,
                                 'argB' => $this->argB,
                                 'argC' => $this->argC,
                                 'argD' => $this->argD,
-                                'status' => $this->status,
                                 'id' => $this->id))) {
 			return true;
 		}else{
@@ -206,7 +195,7 @@ class DataSwitches{
 
 
 	function delete(){
-		$stmt = $this->conn->prepare( "DELETE FROM switches WHERE id = ?" );
+		$stmt = $this->conn->prepare( "DELETE FROM sensors WHERE id = ?" );
   		if($result = $stmt->execute(array($this->id))){
    			return true;
   		}else{

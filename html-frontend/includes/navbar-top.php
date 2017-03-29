@@ -25,8 +25,12 @@
                 $datum = date("j") . ". " . $monate[date("n")] . " " . date("Y");
             ?>
             <div>
-            <span id="anzeige_uhrzeit"><?php echo date('H:i'); ?> Uhr</span> <span id="anzeige_datum"><?php echo $datum; ?></span>
-
+			<?php if($data_settings['show_seconds']==1){; ?>
+				<span id="anzeige_uhrzeit"><?php echo date('H:i:s'); ?> Uhr</span> <span id="anzeige_datum"><?php echo $datum; ?></span>
+			<?php }else{ ?>
+				<span id="anzeige_uhrzeit"><?php echo date('H:i'); ?> Uhr</span> <span id="anzeige_datum"><?php echo $datum; ?></span>
+			<?php } ?>
+			
             <li class="dropdown language-toggle">
                 <a href="#" class="dropdown-toggle language-toggle" data-toggle="dropdown"><?php echo get_lang_id();?><b class="caret"></b></a>
                 <ul class="dropdown-menu">

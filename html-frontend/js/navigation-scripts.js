@@ -19,7 +19,23 @@ function zeitanzeige()
         var monate = new Array ("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
     }
         /*var monate = new Array ("Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez");*/
+
+var test = 	"<?php echo 'bla' ?>";
+
+alert("value of test " + test);
+/*	<?php
+		if($show_seconds === 1) {
+	?>
+	document.getElementById("anzeige_uhrzeit").innerHTML = h + ':' + m + ':' + s + ' Uhr';
+	<?php 
+		} 
+		else {
+	?>
 	document.getElementById("anzeige_uhrzeit").innerHTML = h + ':' + m + ' Uhr';
+	<?php 
+		}
+	?>
+*/
 	document.getElementById("anzeige_datum").innerHTML = d.getDate () + '. ' + monate[d.getMonth ()] + ' ' + d.getFullYear ();
 }
 

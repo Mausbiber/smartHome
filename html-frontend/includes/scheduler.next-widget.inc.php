@@ -1,5 +1,7 @@
 <?php
-    $events = $scheduler->scheduled_events_list("+14 days");
+	//echo "\$scheduler->scheduled_events_list(\"+14 days\", ".$show_seconds.");</br>BEGIN</br>";
+    $events = $scheduler->scheduled_events_list("+14 days", $show_seconds);
+	//echo "END</br>";
     if (count($events)>0) {
 ?>
 <div class="row">

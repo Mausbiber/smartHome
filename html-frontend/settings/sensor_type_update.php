@@ -2,33 +2,33 @@
 	date_default_timezone_set('Europe/Berlin');
 
 	include_once '../includes/config.php';
-	include_once '../includes/switch_types.data.inc.php';
+	include_once '../includes/sensor_types.data.inc.php';
     include_once("../languages/lang.php");
 
 	$database = new Config();
 	$db = $database->getConnection();
-	$switch_types = new DataSwitchTypes($db);
+	$sensor_types = new DataSensorTypes($db);
 
     if (isset($_GET['id'])) {
-		$switch_types->id = $_GET['id'];
-		$switch_types->readOne();
+		$sensor_types->id = $_GET['id'];
+		$sensor_types->readOne();
 	} else {
 		$id = -1;
 	}
 
     if($_POST){
-        $switch_types->title = htmlentities(strip_tags($_POST['title']));
-        $switch_types->icon = $_FILES['icon_file']['name'];
-        $switch_types->icon_tmp = $_FILES['icon_file']['tmp_name'];
-        $switch_types->icon_size = $_FILES['icon_file']['size'];
-        $switch_types->description = htmlentities(strip_tags($_POST['description']));
+        $sensor_types->title = htmlentities(strip_tags($_POST['title']));
+        $sensor_types->icon = $_FILES['icon_file']['name'];
+        $sensor_types->icon_tmp = $_FILES['icon_file']['tmp_name'];
+        $sensor_types->icon_size = $_FILES['icon_file']['size'];
+        $sensor_types->description = htmlentities(strip_tags($_POST['description']));
 
          if ($id<0) {
-            $tmp = $switch_types->create();
-            if($tmp>0) header("Location: switches.php");
+            $tmp = $sensor_types->create();
+            if($tmp>0) header("Location: sensors.php");
         } else {
-            $tmp = $switch_types->update();
-            if($tmp) header("Location: switches.php");
+            $tmp = $sensor_types->update();
+            if($tmp) header("Location: sensors.php");
         }
      }
 
@@ -61,7 +61,7 @@
 
 		<!--Pseudo-Navigationsleiste mit Menu-Button und Anzeige des aktuellen Menu's-->
         <?php
-            $site_name = $lang['settings']." - ".$lang['switching_devices'];
+            $site_name = $lang['settings']." - ".$lang['sensor_devices'];
             include_once '../includes/navbar-top.php';
         ?>
 
@@ -82,9 +82,9 @@
                                     <div class="col-xs-12">
                                         <?php
                                             if ($id<0) {
-                                                echo "<h2>".$lang['create_switching_device']."</h2>";
+                                                echo "<h2>".$lang['create_sensor_device']."</h2>";
                                             } else {
-                                                echo "<h2>".$lang['modify_switching_device']."</h2>";
+                                                echo "<h2>".$lang['modify_sensor_device']."</h2>";
                                             }
                                         ?>
                                     </div>
@@ -97,7 +97,7 @@
                                             <label for="title" class="control-label"><?php echo $lang['title']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-4 col-md-5 no_padding text-left">
-                                            <input type="text" class="form-control" name="title" id="title" placeholder="tf_remote_typ_A" value='<?php echo $switch_types->title; ?>' required>
+                                            <input type="text" class="form-control" name="title" id="title" placeholder="tf_remote_typ_A" value='<?php echo $sensor_types->title; ?>' required>
                                         </div>
                                     </div>
 
@@ -115,7 +115,7 @@
                                             <label for="description" class="control-label"><?php echo $lang['description']; ?></label>
                                         </div>
                                         <div class="col-xs-6 col-sm-4 col-md-5 no_padding text-left">
-                                            <textarea style="width:100%" name="description" id="description" class="form-control" rows="3" placeholder="Funk Schalter, ELO, Typ A"><?php echo $switch_types->description; ?></textarea>
+                                            <textarea style="width:100%" name="description" id="description" class="form-control" rows="3" placeholder="Funk Schalter, ELO, Typ A"><?php echo $sensor_types->description; ?></textarea>
                                         </div>
                                     </div>
 
@@ -125,7 +125,7 @@
                                             <button type="submit" name="submit" class="btn btn-primary btn-fix-width"><span class='glyphicon glyphicon-ok' aria-hidden='true'></span>  <?php echo $lang['save']; ?></button>
                                         </div>
                                         <div class="col-xs-12 col-sm-6 text-switch-center-left no_padding">
-                                            <a class="btn btn-default btn-fix-width" href="switches.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  <?php echo $lang['cancle']; ?></a>
+                                            <a class="btn btn-default btn-fix-width" href="sensors.php" role="button"><span class='glyphicon glyphicon-remove' aria-hidden='true'></span>  <?php echo $lang['cancle']; ?></a>
                                         </div>
                                     </div>
 

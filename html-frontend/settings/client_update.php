@@ -144,7 +144,7 @@
         <!-- Placed at the end of the document so the pages load faster -->
         <script src="../js/jquery-2.1.4.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/navigation-scripts.js"></script>
+        <?php include_once '../js/navigation-scripts.php'; ?>
         <script src="../js/addons/jquery.inputmask.bundle.js"></script>
         <script src="../js/addons/ie10-viewport-bug-workaround.js"></script>
 		<script>

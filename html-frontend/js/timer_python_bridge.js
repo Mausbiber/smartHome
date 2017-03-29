@@ -1,6 +1,6 @@
 // JavaScript Document
 
-var socketServer = new WebSocket('ws://192.168.127.20:5505');
+var socketServer = new WebSocket('ws://10.0.0.61:5505');
 var offline = false;
 
 socketServer.onerror = function(error) {

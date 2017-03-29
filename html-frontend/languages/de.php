@@ -31,6 +31,7 @@
     $lang['general'] = 'Allgemein';
     $lang['switches'] = 'Schalter';
     $lang['sensors'] = 'Sensoren';
+    $lang['status'] = 'Status';
 
 	// Zeitschaltuhr xxx
 	$lang['cycle_times'] = 'Schaltzeiten';
@@ -58,6 +59,7 @@
     $lang['interval'] = 'Intervall';
     $lang['repeat_all'] = 'wiederhole alle';
     $lang['repeat'] = 'wiederhole';
+	$lang['seconds'] = 'Sekunden';
     $lang['minutes'] = 'Minuten';
     $lang['hours'] = 'Stunden';
     $lang['days'] = 'Tage';
@@ -68,7 +70,7 @@
     $lang['waiting_for_response'] = 'Warte auf Rückmeldung ... ';
 
 	// Widget anstehende Schaltzeiten xxxx
-    $lang['upcoming_cycle_times'] = 'Anstehende Schaltzeiten ...';
+    $lang['upcoming_cycle_times'] = 'geplante Schaltzeiten ...';
 
 	// Einstellungen: allgemein xxx
     $lang['clients'] = 'Clients';
@@ -79,6 +81,7 @@
     $lang['entries_per_site'] = 'Einträge pro Seite';
     $lang['preview_period'] = 'Vorschau Zeitraum:';
     $lang['preview_quantity'] = 'Vorschau Anzahl:';
+    $lang['show_seconds'] = 'Sekundengenaue Zeiten:';	
 
 	// Einstellungen: allgemein - neuen Client anlegen xxx
     $lang['create_client'] = 'Client anlegen ...';
@@ -101,5 +104,23 @@
 	// Einstellungen: Schalter-Art
     $lang['create_switching_device'] = 'Schaltgerät anlegen ...';
     $lang['modify_switching_device'] = 'Schaltgerät ändern ...';
+		
+	
+	// Einstellungen: Sensor
+    $lang['new_sensor'] = 'Neuer Sensor';
+    $lang['sensor_device'] = 'Sensor';
+    $lang['sensor_devices'] = 'Sensoren';
+    $lang['new_sensor_device'] = 'Neuer Sensor';
+    $lang['icon'] = 'Icon';
+
+	// Einstellungen: Sensor - Neu
+    $lang['create_sensor'] = 'Sensor anlegen ...';
+    $lang['modify_sensor'] = 'Sensor ändern ...';
+    $lang['arguments'] = 'Argumente';
+    $lang['client'] = 'Client';
+
+	// Einstellungen: Sensor-Art
+    $lang['create_sensor_device'] = 'Sensor anlegen ...';
+    $lang['modify_sensor_device'] = 'Sensor ändern ...';
 
 ?>

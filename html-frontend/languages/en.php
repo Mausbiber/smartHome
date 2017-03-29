@@ -58,6 +58,7 @@
     $lang['interval'] = 'Interval';
     $lang['repeat_all'] = 'repeat all';
     $lang['repeat'] = 'repeat';
+	$lang['seconds'] = 'Sekunden';
     $lang['minutes'] = 'Minutes';
     $lang['hours'] = 'Hours';
     $lang['days'] = 'Days';
@@ -80,6 +81,7 @@
     $lang['entries_per_site'] = 'Entries per Site';
     $lang['preview_period'] = 'Preview Period:';
     $lang['preview_quantity'] = 'Preview Quantity:';
+    $lang['show_seconds'] = 'Accurate in seconds:';	
 
 	// Einstellungen: allgemein - neuen Client anlegen xxx
     $lang['create_client'] = 'Create Client ...';

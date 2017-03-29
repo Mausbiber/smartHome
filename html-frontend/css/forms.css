@@ -140,6 +140,12 @@ input.fix-width-number {
     width: 50px;
 }
 
+input.fix-width-checkbox {
+	margin-right: 0px;
+	margin-left: auto;
+	width: 10px;
+}
+
 
 input[type=text].argument {
     margin-bottom: 12px !important;

@@ -3,17 +3,23 @@
 	
 	include_once '../includes/config.php';
     include_once '../languages/lang.php';
-	include_once '../includes/scheduler.data.inc.php';
+	// include_once '../includes/scheduler.data.inc.php';
+	include_once '../includes/settings.data.inc.php';
 	$page = isset($_GET['page']) ? $_GET['page'] : 1;
 	$records_per_page = 5;
 	$from_record_num = ($records_per_page * $page) - $records_per_page;
 	 
 	$database = new Config();
 	$db = $database->getConnection();
+	
+	$settings = new DataSettings($db);
+	$data_settings = $settings->readAll();
+	$show_seconds = $data_settings['show_seconds'];
+	//$show_seconds = 1;
+	include_once '../includes/scheduler.data.inc.php';
 	$scheduler = new DataScheduler($db);
 	$data_schedulers = $scheduler->readAll($page, $from_record_num, $records_per_page);
 	$num_schedulers = $data_schedulers->rowCount();
-	
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -76,6 +82,9 @@
                                     <div class="col-xs-6 text-right">
                                         <a class="btn btn-danger btn-big-margin" href="update_status.php?usage=timerswitch_restart&id=0" role="button"><span class='glyphicon glyphicon-refresh' aria-hidden='true'></span><?php echo $lang['restart_server']; ?></a>
                                     </div>
+                                    <div class="col-xs-6 text-right">
+                                        <a class="btn btn-danger btn-big-margin" href="update_status.php?usage=read_sensor&id=0" role="button"><span class='glyphicon glyphicon-refresh' aria-hidden='true'></span><?php echo "read Sensor"; ?></a>
+                                    </div>									
                                 </div>
                                 
                                 <!--Data Table-->
@@ -104,8 +113,18 @@
                                                             echo "<td>".$scheduler_title."</td>";
                                                             echo "<td class='hidden-xs'><img src='../img/icons/".$switch_icon."'>".$switch_title."</td>"; 
                                                             $strDateStart = date("d.m.Y", strtotime($date_start_on));
-                                                            $strTimeStart = date("H:i", strtotime($date_start_on));
-                                                            $strTimeStop = date("H:i", strtotime($date_start_off));
+                                                            //$strTimeStart = date("H:i", strtotime($date_start_on));
+                                                            if($show_seconds == 1){
+																	$strTimeStart = date("H:i:s", strtotime($date_start_on));
+															} else {
+																	$strTimeStart = date("H:i", strtotime($date_start_on));
+															};
+															if($show_seconds == 1){
+																	$strTimeStop = date("H:i:s", strtotime($date_start_off));
+															} else {
+																	$strTimeStop = date("H:i", strtotime($date_start_off));
+															};
+															//$strTimeStop = date("H:i", strtotime($date_start_off));
                                                             $zeitraum = $strTimeStart."-".$strTimeStop;
                                                             echo "<td class='hidden-xs'>".$strDateStart."</td>" ;
                                                             echo "<td class='hidden-sm hidden-md hidden-lg'>".$zeitraum."<br>(".$duration.")</td>"; 
@@ -152,7 +171,7 @@
                     </div>
                     
                     <!--Vorschau-Widget-->
-					<?php include_once '../includes/scheduler.next-widget.inc.php' ?>
+				<?php include_once '../includes/scheduler.next-widget.inc.php'; ?>
                     
                 </section>
             </div>
@@ -162,9 +181,10 @@
         <script src="../js/jquery-2.1.4.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/addons/jquery.mCustomScrollbar.js"></script>
-        <script src="../js/navigation-scripts.js"></script>
+        <!-- <script src="../js/navigation-scripts.js"></script> -->
         <script src="../js/addons/ie10-viewport-bug-workaround.js"></script>
-
+		<?php include_once '../js/navigation-scripts.php'; ?>
+		
 		<script>
             $(window).load(function(){
 				$(".scrolling-div").mCustomScrollbar({
